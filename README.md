@@ -89,7 +89,7 @@ Option|Meaning
 `github-commit-status-disabled` | Set this to `true` to disable this integration.
 `github-commit-status-all` | Set this to `true` to add every tag in a separate <br> row. By default, only the primary tag will be added.
 `github-commit-status-description` | This option specifies the format in which the tags <br> will be displayed. The default value is `small`. <br> Can be one of the following values: <pre>large   host/project/image:tag<br><b>eu.gcr.io/flowsquad-io/test-image:latest</b><br><br>medium  project/image:tag<br><b>flowsquad-io/test-image:latest</b><br><br>small   image:tag<br><b>test-image:latest</b><br><br>tiny    tag<br><b>latest</b></pre>
-`github-commit-status-title` | This option specifies the title used in the commit status. The<br>default value is `Docker Image`.
+`github-commit-status-title` | This option specifies the title used in the commit <br> status. The default value is `Docker Image`.
 
 ### GitHub Release information
 
@@ -105,7 +105,7 @@ You can configure this by specifying one or several of the following options:
 Option|Meaning
 ---|---
 `github-release-information-disabled` | Set this to `true` to disable this integration.
-`github-release-information-all` | Set this to `true` to add all image tags instead of just <br>the primary one.
+`github-release-information-all` | Set this to `true` to add all image tags instead <br> of just the primary one.
 
 ## Example
 

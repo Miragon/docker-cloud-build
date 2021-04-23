@@ -37,9 +37,9 @@ this action. You can use the following options.
 Option|Meaning
 ---|---
 `gcp-project-id` | **Required.** The project ID to use for all GCP services.
-`gcp-service-account-key` | **Required.** The content of the service account JSON file to use <br> for authentication.
+`gcp-service-account-key` | **Required.** The content of the service account JSON file to <br> use for authentication.
 `gcp-cloud-storage-bucket` | The Cloud Storage bucket to use to temporarily store the <br> Cloud Build input files. By default, a bucket with the name <br> `${projectId}_cloudbuild` will be used. The uploaded <br> files will be deleted after the build has finished. <br><br> **You have to create the specified bucket first manually.**
-`gcp-gcr-region` | The region to use for Google Container Registry. Can be one <br> of the following values:<ul><li>`gcr.io`</li><li>`eu.gcr.io`</li><li>`us.gcr.io`</li><li>`asia.gcr.io`</li></ul> The default value is `eu.gcr.io`.
+`gcp-gcr-region` | The region to use for Google Container Registry. Can be <br> one of the following values:<ul><li>`gcr.io`</li><li>`eu.gcr.io`</li><li>`us.gcr.io`</li><li>`asia.gcr.io`</li></ul> The default value is `eu.gcr.io`.
 
 ### Building the image
 
@@ -59,9 +59,9 @@ these options.
 Option|Meaning
 ---|---
 `image-tag-latest` | Set this to `true` to add the `latest` tag to the image.
-`image-tag-branch-latest` | Set this to `true` to add the `${branch}-latest` tag to the image.
-`image-tag-additional-tags` | Set this to a comma-separated list of values to specify additional tags.
-`image-tag-format` | Specify the format of the default tag if it is caused by a commit.<br>You can use the following placeholders:<pre>$BRANCH     The branch name, normalized.<br>$SHA        The 7-digit SHA of the commit<br>$YYYY       The year in 4-digit format<br>$MM         The month in 2-digit format<br>$DD         The day in 2-digit format<br>$HH         The hour in 2-digit format (24h)<br>$mm         The minute in 2-digit-format<br>$SS         The second in 2-digit-format</pre>The default format is `$BRANCH-$SHA-$YYYY.$MM.$DD-$HH.$mm.$SS`.
+`image-tag-branch-latest` | Set this to `true` to add the `${branch}-latest` tag to <br> the image.
+`image-tag-additional-tags` | Set this to a comma-separated list of values to specify <br> additional tags.
+`image-tag-format` | Specify the format of the default tag if it is caused by a <br> commit. You can use the following placeholders:<pre>$BRANCH     The branch name, normalized.<br>$SHA        The 7-digit SHA of the commit<br>$YYYY       The year in 4-digit format<br>$MM         The month in 2-digit format<br>$DD         The day in 2-digit format<br>$HH         The hour in 2-digit format (24h)<br>$mm         The minute in 2-digit-format<br>$SS         The second in 2-digit-format</pre> Default value: `$BRANCH-$SHA-$YYYY.$MM.$DD-$HH.$mm.$SS`.
 
 ### GitHub Integration
 
@@ -70,7 +70,7 @@ tag), there are different ways to achieve this. **You have to specify one of the
 
 Option|Meaning
 ---|---
-`github-token` | The token to use to authenticate to GitHub. Usually the [default token provided <br>by GitHub Actions](https://docs.github.com/en/actions/reference/authentication-in-a-workflow) is sufficient. You can specify it like this:<pre>github-token: ${{ secrets.GITHUB_TOKEN }}</pre>
+`github-token` | The token to use to authenticate to GitHub. Usually the [default token <br> provided by GitHub Actions](https://docs.github.com/en/actions/reference/authentication-in-a-workflow) is sufficient. <br><br> You can specify it like this: <br> `github-token: ${{ secrets.GITHUB_TOKEN }}`
 `github-disabled` | Disables all GitHub integrations.
 
 ### GitHub Commit Status

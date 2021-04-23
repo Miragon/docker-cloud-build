@@ -61,7 +61,7 @@ Option|Meaning
 `image-tag-latest` | Set this to `true` to add the `latest` tag to the image.
 `image-tag-branch-latest` | Set this to `true` to add the `${branch}-latest` tag to <br> the image.
 `image-tag-additional-tags` | Set this to a comma-separated list of values to specify <br> additional tags.
-`image-tag-format` | Specify the format of the default tag if it is caused by a <br> commit. You can use the following placeholders:<pre>$BRANCH     The branch name, normalized.<br>$SHA        The 7-digit SHA of the commit<br>$YYYY       The year in 4-digit format<br>$MM         The month in 2-digit format<br>$DD         The day in 2-digit format<br>$HH         The hour in 2-digit format (24h)<br>$mm         The minute in 2-digit-format<br>$SS         The second in 2-digit-format</pre> Default value: `$BRANCH-$SHA-$YYYY.$MM.$DD-$HH.$mm.$SS`.
+`image-tag-format` | Specify the format of the default tag if it is caused by <br> a commit. You can use the following placeholders:<pre>$BRANCH     The branch name, normalized.<br>$SHA        The 7-digit SHA of the commit<br>$YYYY       The year in 4-digit format<br>$MM         The month in 2-digit format<br>$DD         The day in 2-digit format<br>$HH         The hour in 2-digit format (24h)<br>$mm         The minute in 2-digit-format<br>$SS         The second in 2-digit-format</pre> Default: `$BRANCH-$SHA-$YYYY.$MM.$DD-$HH.$mm.$SS`.
 
 ### GitHub Integration
 
@@ -70,7 +70,7 @@ tag), there are different ways to achieve this. **You have to specify one of the
 
 Option|Meaning
 ---|---
-`github-token` | The token to use to authenticate to GitHub. Usually the [default token <br> provided by GitHub Actions](https://docs.github.com/en/actions/reference/authentication-in-a-workflow) is sufficient. <br><br> You can specify it like this: <br> `github-token: ${{ secrets.GITHUB_TOKEN }}`
+`github-token` | The token to use to authenticate to GitHub. Usually the [default token <br> provided by GitHub Actions](https://docs.github.com/en/actions/reference/authentication-in-a-workflow) is sufficient. <br><br> You can specify it like this: <pre>github-token: ${{ secrets.GITHUB_TOKEN }}</pre>
 `github-disabled` | Disables all GitHub integrations.
 
 ### GitHub Commit Status
@@ -87,8 +87,8 @@ You can configure this by specifying one or several of the following options:
 Option|Meaning
 ---|---
 `github-commit-status-disabled` | Set this to `true` to disable this integration.
-`github-commit-status-all` | Set this to `true` to add every tag in a separate row. By default, only<br>the primary tag will be added.
-`github-commit-status-description` | This option specifies the format in which the tags will be displayed.<br>The default value is `small`. Can be one of the following values:<br><pre>large     host/project/image:tag<br>          <b>-> eu.gcr.io/flowsquad-io/test-image:latest</b><br><br>medium    project/image:tag<br>          <b>-> flowsquad-io/test-image:latest</b><br><br>small     image:tag<br>          <b>-> test-image:latest</b><br><br>tiny      tag<br>          <b>-> latest</b></pre>
+`github-commit-status-all` | Set this to `true` to add every tag in a separate row. By <br> default, only the primary tag will be added.
+`github-commit-status-description` | This option specifies the format in which the tags will be <br> displayed. The default value is `small`. Can be one of <br> the following values: <pre>large   host/project/image:tag<br>        <b>eu.gcr.io/flowsquad-io/test-image:latest</b><br><br>medium  project/image:tag<br>        <b>flowsquad-io/test-image:latest</b><br><br>small   image:tag<br>        <b>test-image:latest</b><br><br>tiny    tag<br>        <b>latest</b></pre>
 `github-commit-status-title` | This option specifies the title used in the commit status. The<br>default value is `Docker Image`.
 
 ### GitHub Release information

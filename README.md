@@ -37,9 +37,9 @@ this action. You can use the following options.
 Option|Meaning
 ---|---
 `gcp-project-id` | **Required.** The project ID to use for all GCP services.
-`gcp-service-account-key` | **Required.** The content of the service account JSON file to use for<br>authentication.
-`gcp-cloud-storage-bucket` | The Cloud Storage bucket to use to temporarily store the Cloud Build <br>input files. By default, the bucket `${projectId}_cloudbuild` will<br>be used. **You have to create this first manually.** The uploaded files<br>will be deleted after the build has finished.
-`gcp-gcr-region` | The region to use for Google Container Registry. Can be one of the<br>following values:<ul><li>`gcr.io`</li><li>`eu.gcr.io`</li><li>`us.gcr.io`</li><li>`asia.gcr.io`</li></ul> The default value is `eu.gcr.io`.
+`gcp-service-account-key` | **Required.** The content of the service account JSON file to use <br> for authentication.
+`gcp-cloud-storage-bucket` | The Cloud Storage bucket to use to temporarily store the <br> Cloud Build input files. By default, a bucket with the name <br> `${projectId}_cloudbuild` will be used. The uploaded <br> files will be deleted after the build has finished. <br><br> **You have to create the specified bucket first manually.**
+`gcp-gcr-region` | The region to use for Google Container Registry. Can be one <br> of the following values:<ul><li>`gcr.io`</li><li>`eu.gcr.io`</li><li>`us.gcr.io`</li><li>`asia.gcr.io`</li></ul> The default value is `eu.gcr.io`.
 
 ### Building the image
 
@@ -48,7 +48,7 @@ To build the image successfully, you have to specify at least these options.
 Option|Meaning
 ---|---
 `image-name` | **Required.** The name of the image to build.
-`image-sources` | **Required.** The sources to use to build the image. <br><br>You can include any source files that are within your GitHub workspace, such as <br>build artifacts or Dockerfiles. The option also supports globstar wildcards such <br>as `?`, `*`, `**`, or `[...]`. See [this repository](https://github.com/actions/toolkit/tree/master/packages/glob) for more details.
+`image-sources` | **Required.** The sources to use to build the image. <br><br> You can include any source files that are within your GitHub workspace, <br> such as build artifacts or Dockerfiles. The option also supports globstar <br> wildcards such as `?`, `*`, `**`, or `[...]`. Read [this](https://github.com/actions/toolkit/tree/master/packages/glob) for more details.
 
 ### Tagging the image
 

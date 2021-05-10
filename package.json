@@ -19,6 +19,7 @@
   },
   "scripts": {
     "build": "eslint src && tsc",
+    "dist": "eslint src && ncc cache clean && ncc build src/index.ts -o dist --minify --no-cache --target es2019 --license licenses.txt",
     "lint": "eslint src"
   },
   "dependencies": {
@@ -37,6 +38,7 @@
     "@types/tar": "^4.0.4",
     "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@vercel/ncc": "^0.28.5",
     "eslint": "^7.24.0",
     "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-plugin-import": "^2.22.0",

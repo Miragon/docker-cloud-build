@@ -172,6 +172,11 @@ There are many ways in which you can contribute to this repository, and not all 
   Open an issue if anything is missing or wrong.
 - **Check our open issues.** If there is any issue you would like to work on, feel free to fork the repository and 
   submit a pull request. If you need help, let us know, we're here to help.
+  
+## Development Notice
+
+To create a new release, use the task `yarn dist`. It runs ESLint, clears the cache, and creates a distributable build
+including all required dependencies using @vercel/ncc.
 
 ## License
 

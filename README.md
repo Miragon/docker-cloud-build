@@ -16,7 +16,7 @@ Just include the action in your workflow like this:
 
 ```yaml
 - name: Build Docker Image
-  uses: FlowSquad/docker-cloud-build@v1.0.0
+  uses: FlowSquad/docker-cloud-build@v1.0.1
   with:
     gcp-project-id: my-project-id
     gcp-service-account-key: ${{ secrets.GCP_SA_KEY }}
@@ -137,10 +137,10 @@ jobs:
         run: # Build your application here, e.g.: ./gradlew build
 
       - name: Build Docker Image
-        uses: FlowSquad/docker-cloud-build@v1.0.0
+        uses: FlowSquad/docker-cloud-build@v1.0.1
         with:
           gcp-project-id: my-project-id
-          gcp-service-account-key: ${{ secrets.GCP_SA_KEY }}
+          gcp-service-account-key: my-service-account-key
           gcp-cloud-storage-bucket: my-project-id_cloudbuild      # Default value
           gcp-gcr-region: eu.gcr.io                               # Default value
           image-name: my-image

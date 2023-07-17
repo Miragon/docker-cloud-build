@@ -1,12 +1,12 @@
 {
-  "name": "@flowsquad/docker-cloud-build",
-  "version": "1.0.0",
+  "name": "@miragon/docker-cloud-build",
+  "version": "2.0.0",
   "private": true,
   "description": "Builds a docker image using Google Cloud Build and pushes it to Google Container Registry.",
-  "author": "Alexander Praschek <alexander.praschek@flowsquad.io>",
-  "homepage": "https://github.com/FlowSquad/docker-cloud-build",
+  "author": "Alexander Praschek <alexander.praschek@miragon.io>",
+  "homepage": "https://github.com/Miragon/docker-cloud-build",
   "bugs": {
-    "url": "https://github.com/FlowSquad/docker-cloud-build/issues"
+    "url": "https://github.com/Miragon/docker-cloud-build/issues"
   },
   "license": "Apache-2.0",
   "files": [
@@ -15,7 +15,7 @@
   "main": "dist/index.js",
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com/FlowSquad/docker-cloud-build.git"
+    "url": "ssh://git@github.com/Miragon/docker-cloud-build.git"
   },
   "scripts": {
     "build": "eslint src && tsc",
@@ -23,7 +23,7 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "@actions/core": "^1.2.7",
+    "@actions/core": "^1.10.0",
     "@actions/github": "^4.0.0",
     "@actions/glob": "^0.1.1",
     "@google-cloud/cloudbuild": "^2.2.0",

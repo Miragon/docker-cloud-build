@@ -16,7 +16,7 @@ Just include the action in your workflow like this:
 
 ```yaml
 - name: Build Docker Image
-  uses: FlowSquad/docker-cloud-build@v1.0.1
+  uses: Miragon/docker-cloud-build@v1.0.1
   with:
     gcp-project-id: my-project-id
     gcp-service-account-key: ${{ secrets.GCP_SA_KEY }}
@@ -137,7 +137,7 @@ jobs:
         run: # Build your application here, e.g.: ./gradlew build
 
       - name: Build Docker Image
-        uses: FlowSquad/docker-cloud-build@v1.0.1
+        uses: Miragon/docker-cloud-build@v1.0.1
         with:
           gcp-project-id: my-project-id
           gcp-service-account-key: my-service-account-key
@@ -183,7 +183,7 @@ including all required dependencies using @vercel/ncc.
 Distributed under the Apache 2.0 License.
 
 ```
-Copyright 2021 FlowSquad GmbH
+Copyright 2021 Miragon GmbH
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

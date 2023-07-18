@@ -5,7 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5b754ba2-8757-4faa-9256-16ad2689815f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.eslintrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/api/InputParser.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/api/InputParser.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/gcp/CloudAuthenticationHelper.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/gcp/CloudAuthenticationHelper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/gcp/CloudBuildClient.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/gcp/CloudBuildClient.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/gcp/CloudStorageClient.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/gcp/CloudStorageClient.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/github/CommitStatusClient.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/github/CommitStatusClient.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/github/ContextHelper.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/github/ContextHelper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/github/ReleaseInformationClient.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/github/ReleaseInformationClient.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/github/Types.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/github/Types.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/util/ArchiveClient.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/util/ArchiveClient.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/util/ImageNameHelper.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/util/ImageNameHelper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/util/LogHelper.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/util/LogHelper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/util/TagHelper.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/util/TagHelper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/util/util.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/util/util.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gcp/CloudBuildClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/gcp/CloudBuildClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gcp/CloudStorageClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/gcp/CloudStorageClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github/ContextHelper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/github/ContextHelper.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github/Types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/github/Types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/ArchiveClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/ArchiveClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,20 +47,64 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "fix/set-output-and-flowsquad-to-miragon",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/Martin/Projekte/Miragon/sarif-report-parse",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "nodejs_package_manager_path": "yarn",
-    "ts.external.directory.path": "C:\\Users\\Martin\\Projekte\\Miragon\\docker-cloud-build\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;test&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Martin/Projekte/Miragon/docker-cloud-build/src/github&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Martin\\Projekte\\Miragon\\docker-cloud-build\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Martin\Projekte\Miragon\docker-cloud-build\src\github" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.build">
+    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="dist" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dist" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="lint" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="lint" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.build" />
+        <item itemvalue="npm.lint" />
+        <item itemvalue="npm.dist" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

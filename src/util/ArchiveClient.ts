@@ -66,7 +66,11 @@ export class ArchiveClient {
 
             await remove(rootFolder);
         } catch (e) {
-            throw new Error(`Creating archive ${fileName} failed: ${e.message}`);
+            let errorMessage = "System error!";
+            if (e instanceof Error) {
+                errorMessage = e.message;
+            }
+            throw new Error(`Creating archive ${fileName} failed: ${errorMessage}`);
         }
     }
 }

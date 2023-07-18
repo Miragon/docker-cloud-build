@@ -34,7 +34,11 @@ export class CloudStorageClient {
                 destination: destination
             });
         } catch (e) {
-            throw new Error(`Could not upload ${fileName} to ${bucket}/${destination}: ${e.message}`);
+            let errorMessage = "System error!";
+            if (e instanceof Error) {
+                errorMessage = e.message;
+            }
+            throw new Error(`Could not upload ${fileName} to ${bucket}/${destination}: ${errorMessage}`);
         }
     }
 
@@ -51,7 +55,11 @@ export class CloudStorageClient {
         try {
             await this.client.bucket(bucket).file(fileName).delete();
         } catch (e) {
-            throw new Error(`Could not delete file ${bucket}/${fileName}: ${e.message}`);
+            let errorMessage = "System error!";
+            if (e instanceof Error) {
+                errorMessage = e.message;
+            }
+            throw new Error(`Could not delete file ${bucket}/${fileName}: ${errorMessage}`);
         }
     }
 }

@@ -1,7 +1,11 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -51,7 +55,7 @@ class ArchiveClient {
             const sources = [];
             for (const source of patterns) {
                 core.debug(`Got the following pattern with workspace ${this.workspace}: ${source}`);
-                const globber = await glob_1.create(source, {
+                const globber = await (0, glob_1.create)(source, {
                     followSymbolicLinks: false,
                     implicitDescendants: false
                 });
@@ -62,21 +66,25 @@ class ArchiveClient {
                 sources.push(...patternMatches);
             }
             core.debug("Copying all files and folders to a common directory...");
-            await fs_extra_1.emptyDir(rootFolder);
+            await (0, fs_extra_1.emptyDir)(rootFolder);
             for (const source of sources) {
                 const basename = path_1.default.basename(source);
                 const target = path_1.default.join(rootFolder, basename);
                 core.debug(`Copying ${source} to ${target}`);
-                await fs_extra_1.copy(source, target);
+                await (0, fs_extra_1.copy)(source, target);
             }
-            await tar_1.create({
+            await (0, tar_1.create)({
                 file: fileName,
                 gzip: true
             }, [rootFolder]);
-            await fs_extra_1.remove(rootFolder);
+            await (0, fs_extra_1.remove)(rootFolder);
         }
         catch (e) {
-            throw new Error(`Creating archive ${fileName} failed: ${e.message}`);
+            let errorMessage = "System error!";
+            if (e instanceof Error) {
+                errorMessage = e.message;
+            }
+            throw new Error(`Creating archive ${fileName} failed: ${errorMessage}`);
         }
     }
 }

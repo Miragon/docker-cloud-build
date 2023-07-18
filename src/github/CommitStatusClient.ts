@@ -1,8 +1,8 @@
 import * as core from "@actions/core";
 import { context, getOctokit } from "@actions/github";
+import { GitHub } from "@actions/github/lib/utils";
 import { ImageNameHelper, ImageNameLength } from "../util/ImageNameHelper";
 import { TagInformation } from "../util/TagHelper";
-import { Octokit } from "./Types";
 
 export interface CommitStatusOptions {
     title: string;
@@ -11,7 +11,7 @@ export interface CommitStatusOptions {
 }
 
 export class CommitStatusClient {
-    private client: Octokit;
+    private client: InstanceType<typeof GitHub>;
 
     /**
      * Creates a new instance.
@@ -76,6 +76,6 @@ export class CommitStatusClient {
             target_url: options.url
         };
         core.debug(`Putting commit status with the following options: ${JSON.stringify(request)}`);
-        await this.client.repos.createCommitStatus(request);
+        await this.client.rest.repos.createCommitStatus(request);
     }
 }

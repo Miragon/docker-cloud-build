@@ -1,15 +1,20 @@
 import * as core from "@actions/core";
 import { context, getOctokit } from "@actions/github";
+import { GitHub } from "@actions/github/lib/utils";
+import { RestEndpointMethodTypes } from "@octokit/rest";
 import { ImageNameHelper } from "../util/ImageNameHelper";
 import { TagInformation } from "../util/TagHelper";
-import { GitHubRelease, Octokit } from "./Types";
+import { Await } from "../util/util";
 
 const RELEASE_MESSAGE = "The following Docker Images have been built for this release:";
 const RELEASE_BODY_PREFIX = `\n\n---\n\n*${RELEASE_MESSAGE}*\n`;
 const RELEASE_BODY_ENTRY = "\n:package: **[$_NAME_$]($_URL_$)**";
 
+declare type GitHubRelease = Await<ReturnType<() => RestEndpointMethodTypes["repos"]["getReleaseByTag"]["response"]["data"]>>;
+
+
 export class ReleaseInformationClient {
-    private client: Octokit;
+    private client: InstanceType<typeof GitHub>;
 
     /**
      * Creates a new instance.
@@ -57,7 +62,7 @@ export class ReleaseInformationClient {
      * @private
      */
     private async getReleaseForTag(tag: string): Promise<GitHubRelease> {
-        const response = await this.client.repos.getReleaseByTag({
+        const response = await this.client.rest.repos.getReleaseByTag({
             ...context,
             ...context.repo,
             tag
@@ -73,7 +78,7 @@ export class ReleaseInformationClient {
      * @private
      */
     private async updateReleaseBody(release: GitHubRelease, body: string): Promise<void> {
-        await this.client.repos.updateRelease({
+        await this.client.rest.repos.updateRelease({
             ...context,
             ...context.repo,
             release_id: release.id,

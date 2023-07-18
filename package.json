@@ -1,6 +1,6 @@
 {
   "name": "@miragon/docker-cloud-build",
-  "version": "2.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "Builds a docker image using Google Cloud Build and pushes it to Google Container Registry.",
   "author": "Alexander Praschek <alexander.praschek@miragon.io>",

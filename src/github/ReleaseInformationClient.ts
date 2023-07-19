@@ -10,7 +10,7 @@ const RELEASE_MESSAGE = "The following Docker Images have been built for this re
 const RELEASE_BODY_PREFIX = `\n\n---\n\n*${RELEASE_MESSAGE}*\n`;
 const RELEASE_BODY_ENTRY = "\n:package: **[$_NAME_$]($_URL_$)**";
 
-declare type GitHubRelease = Await<ReturnType<() => RestEndpointMethodTypes["repos"]["getReleaseByTag"]["response"]["data"]>>;
+declare type GitHubRelease = Await<RestEndpointMethodTypes["repos"]["getReleaseByTag"]["response"]["data"]>;
 
 
 export class ReleaseInformationClient {

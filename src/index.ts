@@ -146,7 +146,7 @@ async function run(): Promise<void> {
 
             // Would have thrown in parseInput if token was not set
             const commitStatusClient = new CommitStatusClient(input.github.token!);
-            commitStatusClient.updateCommitStatus(
+            await commitStatusClient.updateCommitStatus(
                 tagInformation,
                 input.github.commitStatus.title,
                 input.github.commitStatus.description,

@@ -1,12 +1,12 @@
 {
-  "name": "@flowsquad/docker-cloud-build",
-  "version": "1.0.0",
+  "name": "@miragon/docker-cloud-build",
+  "version": "1.0.2",
   "private": true,
   "description": "Builds a docker image using Google Cloud Build and pushes it to Google Container Registry.",
-  "author": "Alexander Praschek <alexander.praschek@flowsquad.io>",
-  "homepage": "https://github.com/FlowSquad/docker-cloud-build",
+  "author": "Alexander Praschek <alexander.praschek@miragon.io>",
+  "homepage": "https://github.com/Miragon/docker-cloud-build",
   "bugs": {
-    "url": "https://github.com/FlowSquad/docker-cloud-build/issues"
+    "url": "https://github.com/Miragon/docker-cloud-build/issues"
   },
   "license": "Apache-2.0",
   "files": [
@@ -15,7 +15,7 @@
   "main": "dist/index.js",
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com/FlowSquad/docker-cloud-build.git"
+    "url": "ssh://git@github.com/Miragon/docker-cloud-build.git"
   },
   "scripts": {
     "build": "eslint src && tsc",
@@ -23,26 +23,29 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "@actions/core": "^1.2.7",
-    "@actions/github": "^4.0.0",
-    "@actions/glob": "^0.1.1",
-    "@google-cloud/cloudbuild": "^2.2.0",
-    "@google-cloud/storage": "^5.8.4",
-    "fs-extra": "^9.1.0",
-    "tar": "^6.1.0",
-    "uuid": "^8.3.2"
+    "@actions/core": "^1.10.0",
+    "@actions/github": "^5.1.1",
+    "@actions/glob": "^0.4.0",
+    "@google-cloud/cloudbuild": "^3.9.0",
+    "@google-cloud/storage": "^6.12.0",
+    "fs-extra": "^11.1.1",
+    "tar": "^6.1.15",
+    "uuid": "^9.0.0",
+    "@octokit/rest": "^18.0.0"
   },
   "devDependencies": {
-    "@types/fs-extra": "^9.0.11",
-    "@types/node": "^14.14.41",
-    "@types/tar": "^4.0.4",
-    "@types/uuid": "^8.3.0",
-    "@typescript-eslint/eslint-plugin": "^4.22.0",
-    "@vercel/ncc": "^0.28.5",
-    "eslint": "^7.24.0",
-    "eslint-config-airbnb-typescript": "^12.3.1",
-    "eslint-plugin-import": "^2.22.0",
-    "typescript": "^4.2.4"
+    "@types/fs-extra": "^11.0.1",
+    "@types/node": "^20.4.2",
+    "@types/tar": "^6.1.5",
+    "@types/uuid": "^9.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.1.0",
+    "@typescript-eslint/parser": "^6.1.0",
+    "@octokit/types": "^11.1.0",
+    "@vercel/ncc": "^0.36.1",
+    "eslint": "^8.45.0",
+    "eslint-config-airbnb-typescript": "^17.1.0",
+    "eslint-plugin-import": "^2.27.5",
+    "typescript": "^5.1.6"
   },
   "engines": {
     "node": "*"

@@ -1,7 +1,11 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -32,7 +36,7 @@ class ReleaseInformationClient {
      * @param githubToken The GitHub token to use for authentication
      */
     constructor(githubToken) {
-        this.client = github_1.getOctokit(githubToken);
+        this.client = (0, github_1.getOctokit)(githubToken);
     }
     /**
      * Appends the list of built images to a existing GitHub release.
@@ -61,7 +65,7 @@ class ReleaseInformationClient {
      * @private
      */
     async getReleaseForTag(tag) {
-        const response = await this.client.repos.getReleaseByTag({
+        const response = await this.client.rest.repos.getReleaseByTag({
             ...github_1.context,
             ...github_1.context.repo,
             tag
@@ -76,7 +80,7 @@ class ReleaseInformationClient {
      * @private
      */
     async updateReleaseBody(release, body) {
-        await this.client.repos.updateRelease({
+        await this.client.rest.repos.updateRelease({
             ...github_1.context,
             ...github_1.context.repo,
             release_id: release.id,

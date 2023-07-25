@@ -1,6 +1,6 @@
 name: "Docker Cloud Build"
 description: "Builds a docker image using Google Cloud Build and pushes it to Google Container Registry."
-author: "Alexander Praschek <alexander.praschek@flowsquad.io>"
+author: "Alexander Praschek <alexander.praschek@miragon.io>"
 inputs:
   gcp-project-id:
     required: true
@@ -105,7 +105,7 @@ outputs:
     description: >-
       Contains a comma-separated list of tags for the built image.
 runs:
-  using: "node12"
+  using: "node16"
   main: "dist/index.js"
 branding:
   color: "blue"

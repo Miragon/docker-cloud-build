@@ -5,7 +5,9 @@ export type ActionType = "commit" | "tag" | "other";
 
 export class ContextHelper {
     private actionType: ActionType;
+
     private normalizedRefName: string;
+
     private refName: string;
 
     /**

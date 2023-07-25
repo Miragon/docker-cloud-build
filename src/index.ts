@@ -41,8 +41,12 @@ async function run(): Promise<void> {
         const archiveClient = new ArchiveClient(workspace);
         await archiveClient.archive(input.image.sources, "build.tgz", rootFolder);
     } catch (e) {
+        let errorMessage = "System error!";
+        if (e instanceof Error) {
+            errorMessage = e.message;
+        }
         core.endGroup();
-        throw new Error(`Could not create build input file: ${e.message}`);
+        throw new Error(`Could not create build input file: ${errorMessage}`);
     }
 
     // 4. Upload Cloud Build input file
@@ -52,8 +56,12 @@ async function run(): Promise<void> {
         await storageClient.upload(input.gcp.cloudStorage.bucket, "build.tgz", buildFileName);
         await unlink("build.tgz");
     } catch (e) {
+        let errorMessage = "System error!";
+        if (e instanceof Error) {
+            errorMessage = e.message;
+        }
         core.endGroup();
-        throw new Error(`Could not upload build input file: ${e.message}`);
+        throw new Error(`Could not upload build input file: ${errorMessage}`);
     }
 
     // 5. Initialize image name and tags
@@ -101,8 +109,12 @@ async function run(): Promise<void> {
         core.debug("Removing uploaded input file");
         await storageClient.delete(input.gcp.cloudStorage.bucket, buildFileName);
     } catch (e) {
+        let errorMessage = "System error!";
+        if (e instanceof Error) {
+            errorMessage = e.message;
+        }
         core.endGroup();
-        throw new Error(`Removing uploaded input file failed: ${e.message}
+        throw new Error(`Removing uploaded input file failed: ${errorMessage}
             Please remove the file ${input.gcp.cloudStorage.bucket}/${buildFileName} manually.`);
     }
 
@@ -134,7 +146,7 @@ async function run(): Promise<void> {
 
             // Would have thrown in parseInput if token was not set
             const commitStatusClient = new CommitStatusClient(input.github.token!);
-            commitStatusClient.updateCommitStatus(
+            await commitStatusClient.updateCommitStatus(
                 tagInformation,
                 input.github.commitStatus.title,
                 input.github.commitStatus.description,
@@ -142,8 +154,11 @@ async function run(): Promise<void> {
                 imageNameHelper
             );
         } catch (e) {
-            core.error("Failed to set commit status. Build was still successful though.");
-            core.error(e);
+            let errorMessage = "Failed to set commit status. Build was still successful though.";
+            if (e instanceof Error) {
+                errorMessage = e.message;
+            }
+            core.error(errorMessage);
         }
     } else if (actionType !== "commit") {
         core.info("Not setting commit status since build was not caused by a commit.");
@@ -167,8 +182,11 @@ async function run(): Promise<void> {
                 imageNameHelper
             );
         } catch (e) {
-            core.error("Failed to update release information. Build was still successful though.");
-            core.error(e);
+            let errorMessage = "Failed to set commit status. Build was still successful though.";
+            if (e instanceof Error) {
+                errorMessage = e.message;
+            }
+            core.error(errorMessage);
         }
     } else if (process.env.GITHUB_EVENT_NAME !== "release") {
         core.info("Not updating release information because this build was not caused by a release.");
@@ -189,7 +207,12 @@ const asyncRun = async (): Promise<void> => {
     try {
         await run();
     } catch (e) {
-        core.setFailed(e);
+        let errorMessage = "System error!";
+        if (e instanceof Error) {
+            errorMessage = e.message;
+        }
+        core.error(errorMessage);
+        core.setFailed(errorMessage);
     }
 };
 

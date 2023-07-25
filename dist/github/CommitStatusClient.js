@@ -1,7 +1,11 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -29,7 +33,7 @@ class CommitStatusClient {
      * @param githubToken The GitHub token to use for authentication
      */
     constructor(githubToken) {
-        this.client = github_1.getOctokit(githubToken);
+        this.client = (0, github_1.getOctokit)(githubToken);
     }
     /**
      * Updates the commit information of the commit that caused this build.
@@ -76,7 +80,7 @@ class CommitStatusClient {
             target_url: options.url
         };
         core.debug(`Putting commit status with the following options: ${JSON.stringify(request)}`);
-        await this.client.repos.createCommitStatus(request);
+        await this.client.rest.repos.createCommitStatus(request);
     }
 }
 exports.CommitStatusClient = CommitStatusClient;

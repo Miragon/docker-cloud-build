@@ -146,11 +146,15 @@ export class CloudBuildClient {
                 }
             };
         } catch (e) {
+            let errorMessage = "System error!";
+            if (e instanceof Error) {
+                errorMessage = e.message;
+            }
             return {
                 logsUrl: "Not Found",
                 error: {
                     code: -1,
-                    message: e.message
+                    message: errorMessage
                 }
             };
         }

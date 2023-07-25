@@ -1,7 +1,11 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -32,9 +36,9 @@ class CloudAuthenticationHelper {
      * @param keyString The string containing the credentials for GCP.
      */
     constructor(keyString) {
-        this.authFile = path_1.resolve(`./auth-${uuid_1.v4()}.json`);
+        this.authFile = (0, path_1.resolve)(`./auth-${(0, uuid_1.v4)()}.json`);
         core.debug(`Exporting authentication information to ${this.authFile}`);
-        fs_1.writeFileSync(this.authFile, buffer_1.Buffer.from(keyString, "base64"));
+        (0, fs_1.writeFileSync)(this.authFile, buffer_1.Buffer.from(keyString, "base64"));
     }
     /**
      * Returns the path to the created authentication file.
@@ -47,7 +51,7 @@ class CloudAuthenticationHelper {
      */
     clean() {
         core.debug("Removing exported authentication information");
-        fs_1.unlinkSync(this.authFile);
+        (0, fs_1.unlinkSync)(this.authFile);
     }
 }
 exports.CloudAuthenticationHelper = CloudAuthenticationHelper;

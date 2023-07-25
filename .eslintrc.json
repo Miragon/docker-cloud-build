@@ -5,7 +5,8 @@
         "project": "./tsconfig.json"
     },
     "plugins": [
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "import"
     ],
     "extends": [
         "eslint:recommended",
@@ -22,12 +23,6 @@
             "double"
         ],
         "@typescript-eslint/comma-dangle": "off",
-        "@typescript-eslint/lines-between-class-members": [
-            "error",
-            {
-                "exceptAfterSingleLine": true
-            }
-        ],
         "@typescript-eslint/no-unused-expressions": [
             "error",
             {

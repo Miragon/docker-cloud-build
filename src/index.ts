@@ -216,4 +216,4 @@ const asyncRun = async (): Promise<void> => {
     }
 };
 
-asyncRun().then();
+asyncRun();

@@ -25,7 +25,7 @@ inputs:
   gcp-registry-host:
     required: false
     description: >-
-      The host to use for Google Artifact Registry. Defaults to europe.pkg.dev.
+      The host to use for Google Artifact Registry. Defaults to europe-docker.pkg.dev.
       
       Find all supported values in the GCP documentation (https://cloud.google.com/artifact-registry/docs/repositories/repo-locations). 
       If you want to use a former GCR repository, this value must be set to one of the GCR endpoints (e.g. `eu.gcr.io`).

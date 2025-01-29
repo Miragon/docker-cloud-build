@@ -68,7 +68,7 @@ export const parseInput = (): InputParams => {
     const gcpServiceAccountKey = getRequiredStringParam("gcp-service-account-key");
     const gcpCloudStorageBucket = getOptionalStringParam("gcp-cloud-storage-bucket", `${gcpProjectId}_cloudbuild`);
     const gcpRegistryUseGcr = getOptionalBooleanParam("gcp-registry-use-gcr", false);
-    const gcpRegistryHost = getOptionalStringParam("gcp-registry-host", "europe.pkg.dev");
+    const gcpRegistryHost = getOptionalStringParam("gcp-registry-host", "europe-docker.pkg.dev");
     const gcpRegistryRepository = gcpRegistryUseGcr ? getOptionalStringParam("gcp-registry-repository", gcpProjectId) : getRequiredStringParam("gcp-registry-repository");
 
     const imageName = getRequiredStringParam("image-name");

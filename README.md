@@ -39,7 +39,7 @@ this action. You can use the following options.
 | `gcp-service-account-key`  | **Required.** The content of the service account JSON file to <br> use for authentication.                                                                                                                                                                                                                                                                                                                                               |
 | `gcp-cloud-storage-bucket` | The Cloud Storage bucket to use to temporarily store the <br> Cloud Build input files. By default, a bucket with the name <br> `${projectId}_cloudbuild` will be used. The uploaded <br> files will be deleted after the build has finished. <br><br> **You have to create the specified bucket first manually.**                                                                                                                        |
 | `gcp-registry-use-gcr`     | Enables support for former Google Container Registry <br> repositories migrated to Google Artifact Registry.                                                                                                                                                                                                                                                                                                                             |
-| `gcp-registry-host`        | The host to use for Google Artifact Registry. Find all <br> supported values [in the GCP documentation](https://cloud.google.com/artifact-registry/docs/repositories/repo-locations). The default <br> value is `europe.pkg.dev`. <br><br> If you want to use a former GCR repository, this value <br> must be set to one of the GCR endpoints (e.g. `eu.gcr.io`).                                                                       |
+| `gcp-registry-host`        | The host to use for Google Artifact Registry. Find all <br> supported values [in the GCP documentation](https://cloud.google.com/artifact-registry/docs/repositories/repo-locations). The default <br> value is `europe-docker.pkg.dev`. <br><br> If you want to use a former GCR repository, this value <br> must be set to one of the GCR endpoints (e.g. `eu.gcr.io`).                                                                |
 | `gcp-registry-repository`  | **Required unless you use GCR.** <br> The repository to use for Google Artifact Registry. <br><br> **You have to create the specified repository first manually.** <br><br>If you want to use a former GCR repository, you can omit this <br> value. The `gcp-project-id` will be used instead. If you <br> want to use a repository in another project, you can still use <br> this parameter to override the project ID default value. |
 
 ### Support for former Google Container Registry repositories
@@ -108,7 +108,7 @@ jobs:
           gcp-project-id: my-project-id
           gcp-service-account-key: my-service-account-key
           gcp-cloud-storage-bucket: my-project-id_cloudbuild      # Default value
-          gcp-registry-host: europe.pkg.dev                       # Default value
+          gcp-registry-host: europe-docker.pkg.dev                # Default value
           gcp-registry-repository: my-repository
           image-name: my-image
           image-sources: build/libs/*.jar,Dockerfile

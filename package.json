@@ -21,6 +21,7 @@
         "dist": "eslint src && ncc cache clean && ncc build src/index.ts -o dist --minify --no-cache --target es2023 --license licenses.txt",
         "lint": "eslint src"
     },
+    "type": "module",
     "dependencies": {
         "@actions/core": "^1.11.1",
         "@actions/glob": "^0.5.0",

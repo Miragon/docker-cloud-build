@@ -72,9 +72,9 @@ const parseInput = () => {
     const gcpProjectId = getRequiredStringParam("gcp-project-id");
     const gcpServiceAccountKey = getRequiredStringParam("gcp-service-account-key");
     const gcpCloudStorageBucket = getOptionalStringParam("gcp-cloud-storage-bucket", `${gcpProjectId}_cloudbuild`);
-    const gcpGarUseGcr = getOptionalBooleanParam("gcp-artifact-registry-use-gcr", false);
-    const gcpGarHost = gcpGarUseGcr ? undefined : getOptionalStringParam("gcp-artifact-registry-host", "europe.pkg.dev");
-    const gcpGarRepository = gcpGarUseGcr ? undefined : getRequiredStringParam("gcp-artifact-registry-repository");
+    const gcpRegistryUseGcr = getOptionalBooleanParam("gcp-registry-use-gcr", false);
+    const gcpRegistryHost = gcpRegistryUseGcr ? undefined : getOptionalStringParam("gcp-registry-host", "europe.pkg.dev");
+    const gcpRegistryRepository = gcpRegistryUseGcr ? undefined : getRequiredStringParam("gcp-registry-repository");
     const imageName = getRequiredStringParam("image-name");
     const imageSources = getRequiredStringArrayParam("image-sources");
     const imageTagFormat = getOptionalStringParam("image-tag-format", "$BRANCH-$SHA-$YYYY.$MM.$DD-$HH.$mm.$SS");
@@ -88,10 +88,10 @@ const parseInput = () => {
             cloudStorage: {
                 bucket: gcpCloudStorageBucket
             },
-            artifactRegistry: {
-                useGcr: gcpGarUseGcr,
-                host: gcpGarHost,
-                repository: gcpGarRepository
+            registry: {
+                useGcr: gcpRegistryUseGcr,
+                host: gcpRegistryHost,
+                repository: gcpRegistryRepository
             }
         },
         image: {

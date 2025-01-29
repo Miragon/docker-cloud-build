@@ -18,26 +18,38 @@ Just include the action in your workflow like this:
   with:
     gcp-project-id: my-project-id
     gcp-service-account-key: ${{ secrets.GCP_SA_KEY }}
+    gcp-registry-repository: my-repository
     image-name: my-image-name
     image-sources: build/libs/*.jar,Dockerfile,some-other-file
 ```
 
 ## Configuration
 
-The action can be configured by specifying several configuration options that are described in detail in the following paragraphs.
+The action can be configured by specifying several configuration options that are described in detail in the following
+paragraphs.
 
 ### Configuring GCP
 
 To use Google Cloud services such as Cloud Build, Cloud Storage, or Artifact Registry, you first have to configure
 this action. You can use the following options.
 
-| Option                             | Meaning                                                                                                                                                                                                                                                                                                           |
-|------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `gcp-project-id`                   | **Required.** The project ID to use for all GCP services.                                                                                                                                                                                                                                                         |
-| `gcp-service-account-key`          | **Required.** The content of the service account JSON file to <br> use for authentication.                                                                                                                                                                                                                        |
-| `gcp-cloud-storage-bucket`         | The Cloud Storage bucket to use to temporarily store the <br> Cloud Build input files. By default, a bucket with the name <br> `${projectId}_cloudbuild` will be used. The uploaded <br> files will be deleted after the build has finished. <br><br> **You have to create the specified bucket first manually.** |
-| `gcp-artifact-registry-location`   | The location to use for Google Artifact Registry. Find all <br> supported values [in the GCP documentation](https://cloud.google.com/artifact-registry/docs/repositories/repo-locations). The default <br> value is `europe`.                                                                                     |
-| `gcp-artifact-registry-repository` | The repository to use for Google Artifact Registry.                                                                                                                                                                                                                                                               |
+| Option                     | Meaning                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+|----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `gcp-project-id`           | **Required.** The project ID to use for all GCP services.                                                                                                                                                                                                                                                                                                                                                                                           |
+| `gcp-service-account-key`  | **Required.** The content of the service account JSON file to <br> use for authentication.                                                                                                                                                                                                                                                                                                                                                          |
+| `gcp-cloud-storage-bucket` | The Cloud Storage bucket to use to temporarily store the <br> Cloud Build input files. By default, a bucket with the name <br> `${projectId}_cloudbuild` will be used. The uploaded <br> files will be deleted after the build has finished. <br><br> **You have to create the specified bucket first manually.**                                                                                                                                   |
+| `gcp-registry-use-gcr`     | Enables support for former Google Container Registry <br> repositories migrated to Google Artifact Registry.                                                                                                                                                                                                                                                                                                                                        |
+| `gcp-registry-host`        | The host to use for Google Artifact Registry. Find all <br> supported values [in the GCP documentation](https://cloud.google.com/artifact-registry/docs/repositories/repo-locations). The default <br> value is `europe.pkg.dev`. <br><br> If you want to use a former GCR repository, this value <br> must be set to one of the GCR endpoints (e.g. `eu.gcr.io`).                                                                                  |
+| `gcp-registry-repository`  | **Required unless you enable support for GCR.** <br> The repository to use for Google Artifact Registry. <br> **You have to create the specified repository first manually.** <br><br>If you want to use a former GCR repository, you can omit this <br> value. The `gcp-project-id` will be used instead. If you <br> want to use a repository in another project, you can still use <br> this parameter to override the project ID default value. |
+
+### Support for former Google Container Registry repositories
+
+Google Container Registry is deprecated and is replaced by Google Artifact Registry. However, we still support gcr.io
+repositories that have been migrated to Google Artifact Registry. In order for this to work, you have to follow these steps:
+
+1. Set the value `gcp-registry-use-gcr` to `true`.
+2. Set the value `gcp-registry-host` to the GCR endpoint that you want to use (e.g. `eu.gcr.io`).
+3. Omit the value `gcp-registry-repository` unless you want to use a repository in another project.
 
 ### Building the image
 
@@ -63,7 +75,7 @@ these options.
 
 ## Example
 
-This is an example for a GitHub Action workflow that uses this action and specifies all possible options (that are not 
+This is an example for a GitHub Action workflow that uses this action and specifies all possible options (that are not
 exclusive to each other). You need to adapt it to your own requirements first.
 
 ```yaml
@@ -96,8 +108,8 @@ jobs:
           gcp-project-id: my-project-id
           gcp-service-account-key: my-service-account-key
           gcp-cloud-storage-bucket: my-project-id_cloudbuild      # Default value
-          gcp-artifact-registry-location: europe                  # Default value
-          gcp-artifact-registry-repository: my-repository
+          gcp-registry-host: europe.pkg.dev                       # Default value
+          gcp-registry-repository: my-repository
           image-name: my-image
           image-sources: build/libs/*.jar,Dockerfile
           image-tag-format: $BRANCH-$SHA-$YYYY$MM$DD-$HH$mm$SS    # Optional
@@ -110,19 +122,19 @@ jobs:
 
 We are always welcoming new contributors that are helping to improve this action.
 
-The [Open Source Guides](https://opensource.guide/) website has a lot of information for people and companies who are 
-interested in how to run and contribute to an open source project. Contributors and people new to open source will find 
+The [Open Source Guides](https://opensource.guide/) website has a lot of information for people and companies who are
+interested in how to run and contribute to an open source project. Contributors and people new to open source will find
 [this guide on how to contribute to Open Source](https://opensource.guide/how-to-contribute/) especially helpful.
 
 There are many ways in which you can contribute to this repository, and not all of them require you to write code:
 
-- **Use the action!** Test the action, check if edge cases are breaking them, and open issues if anything does not work 
+- **Use the action!** Test the action, check if edge cases are breaking them, and open issues if anything does not work
   as expected or could be improved. Send us your feedback.
 - **Read our documentation.** Is everything covered or are there any missing parts? Is there anything left unclear?
   Open an issue if anything is missing or wrong.
-- **Check our open issues.** If there is any issue you would like to work on, feel free to fork the repository and 
+- **Check our open issues.** If there is any issue you would like to work on, feel free to fork the repository and
   submit a pull request. If you need help, let us know, we're here to help.
-  
+
 ## Development Notice
 
 To create a new release, use the task `yarn dist`. It runs ESLint, clears the cache, and creates a distributable build

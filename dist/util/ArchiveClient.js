@@ -43,6 +43,7 @@ const fs_extra_1 = require("fs-extra");
 const path_1 = __importDefault(require("path"));
 const tar_1 = require("tar");
 class ArchiveClient {
+    workspace;
     /**
      * Creates a new instance.
      *

@@ -37,6 +37,9 @@ exports.ContextHelper = void 0;
 const core = __importStar(require("@actions/core"));
 const util_1 = require("../util/util");
 class ContextHelper {
+    actionType;
+    normalizedRefName;
+    refName;
     /**
      * Creates a new instance.
      */

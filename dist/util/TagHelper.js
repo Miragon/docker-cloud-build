@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TagHelper = void 0;
 class TagHelper {
+    contextHelper;
     /**
      * Creates a new instance.
      *

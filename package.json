@@ -18,7 +18,7 @@
     "url": "ssh://git@github.com/Miragon/docker-cloud-build.git"
   },
   "scripts": {
-    "dist": "rimraf dist && eslint src && tsc && ncc cache clean && ncc build src/index.ts -o dist --minify --no-cache --target es2019 --license licenses.txt",
+    "dist": "rimraf dist && eslint src && tsc && ncc cache clean && ncc build src/index.ts -o dist --minify --no-cache --target es2023 --license licenses.txt",
     "lint": "eslint src"
   },
   "dependencies": {
@@ -32,7 +32,6 @@
   },
   "devDependencies": {
     "@eslint/compat": "^1.2.5",
-    "@octokit/types": "^13.7.0",
     "@stylistic/eslint-plugin": "^3.0.0",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^22.12.0",

@@ -37,6 +37,7 @@ exports.CloudStorageClient = void 0;
 const core = __importStar(require("@actions/core"));
 const storage_1 = require("@google-cloud/storage");
 class CloudStorageClient {
+    client;
     /**
      * Creates a new instance.
      *

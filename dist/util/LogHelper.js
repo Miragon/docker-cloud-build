@@ -41,17 +41,19 @@ const core = __importStar(require("@actions/core"));
  * @param buildResult The Cloud Build result to print
  */
 const printImageSummary = (buildResult) => {
+    var _a, _b;
     core.info("Build was successful!");
     core.info(`Build logs are available here: ${buildResult.logsUrl}`);
-    if (buildResult.result?.images.length === 0) {
+    if (((_a = buildResult.result) === null || _a === void 0 ? void 0 : _a.images.length) === 0) {
         core.info("No images built.");
     }
     else {
         core.info("Built the following images:\n");
         const nameToDigest = [];
         let longestName = 0;
-        buildResult.result?.images.forEach(image => {
-            const digest = image.digest?.substring(0, 15);
+        (_b = buildResult.result) === null || _b === void 0 ? void 0 : _b.images.forEach(image => {
+            var _a;
+            const digest = (_a = image.digest) === null || _a === void 0 ? void 0 : _a.substring(0, 15);
             const name = image.name;
             if (name && name.length > longestName) {
                 longestName = name.length;

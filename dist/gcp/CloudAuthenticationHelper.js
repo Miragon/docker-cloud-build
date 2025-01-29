@@ -40,7 +40,6 @@ const fs_1 = require("fs");
 const path_1 = require("path");
 const uuid_1 = require("uuid");
 class CloudAuthenticationHelper {
-    authFile;
     /**
      * Creates a new instance.
      *

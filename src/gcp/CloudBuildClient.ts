@@ -83,10 +83,11 @@ export class CloudBuildClient {
 
         try {
             core.debug(`Starting build with options\n\n: ${JSON.stringify(buildOptions, undefined, 2)}`);
-            core.debug(String(this.client));
-            core.debug(String(this.client.createBuild));
-            const [value] = await this.client.createBuild(buildOptions);
-            core.debug("Started build");
+            const promise = this.client.createBuild(buildOptions);
+            core.debug("Started build: " + promise);
+            const [value, operation, test] = await promise;
+            core.debug("Operation" + JSON.stringify(operation, undefined, 2));
+            core.debug("Test" + JSON.stringify(test, undefined, 2));
 
             // Broken types
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -152,10 +153,9 @@ export class CloudBuildClient {
             };
         } catch (e) {
             core.error("Unexpected error");
-            core.error(String((e as Error).name));
-            core.error(String((e as Error).message));
-            core.error(String((e as Error).stack));
-            core.error(String((e as Error).cause));
+            core.error("Name: " + String((e as Error).name));
+            core.error("Message: " + String((e as Error).message));
+            core.error("Stack: " + String((e as Error).stack));
             let errorMessage = "System error!";
             if (e instanceof Error) {
                 errorMessage = e.message;

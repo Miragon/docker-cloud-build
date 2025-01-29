@@ -18,8 +18,7 @@
     "url": "ssh://git@github.com/Miragon/docker-cloud-build.git"
   },
   "scripts": {
-    "build": "eslint src && tsc",
-    "dist": "eslint src && ncc cache clean && ncc build src/index.ts -o dist --minify --no-cache --target es2019 --license licenses.txt",
+    "dist": "rimraf dist && eslint src && tsc && ncc cache clean && ncc build src/index.ts -o dist --minify --no-cache --target es2019 --license licenses.txt",
     "lint": "eslint src"
   },
   "dependencies": {
@@ -28,23 +27,25 @@
     "@actions/glob": "^0.4.0",
     "@google-cloud/cloudbuild": "^3.9.0",
     "@google-cloud/storage": "^6.12.0",
+    "@octokit/rest": "^18.0.0",
+    "@types/rimraf": "^4.0.5",
     "fs-extra": "^11.1.1",
     "tar": "^6.1.15",
-    "uuid": "^9.0.0",
-    "@octokit/rest": "^18.0.0"
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@octokit/types": "^11.1.0",
     "@types/fs-extra": "^11.0.1",
     "@types/node": "^20.4.2",
     "@types/tar": "^6.1.5",
     "@types/uuid": "^9.0.0",
     "@typescript-eslint/eslint-plugin": "^6.1.0",
     "@typescript-eslint/parser": "^6.1.0",
-    "@octokit/types": "^11.1.0",
     "@vercel/ncc": "^0.36.1",
     "eslint": "^8.45.0",
     "eslint-config-airbnb-typescript": "^17.1.0",
     "eslint-plugin-import": "^2.27.5",
+    "rimraf": "^6.0.1",
     "typescript": "^5.1.6"
   },
   "engines": {

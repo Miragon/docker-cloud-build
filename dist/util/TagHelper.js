@@ -1,5 +1,7 @@
-export class TagHelper {
-    contextHelper;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.TagHelper = void 0;
+class TagHelper {
     /**
      * Creates a new instance.
      *
@@ -59,3 +61,4 @@ export class TagHelper {
             .split("$SS").join(now.getSeconds().toString().padStart(2, "0"));
     }
 }
+exports.TagHelper = TagHelper;

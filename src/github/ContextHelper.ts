@@ -4,11 +4,11 @@ import { normalize } from "../util/util";
 export type ActionType = "commit" | "tag" | "other";
 
 export class ContextHelper {
-    private actionType: ActionType;
+    private readonly actionType: ActionType;
 
-    private normalizedRefName: string;
+    private readonly normalizedRefName: string;
 
-    private refName: string;
+    private readonly refName: string;
 
     /**
      * Creates a new instance.
@@ -16,10 +16,10 @@ export class ContextHelper {
     constructor() {
         const githubRef = process.env.GITHUB_REF!;
         if (githubRef.startsWith("refs/heads/")) {
-            this.refName = githubRef.substr(11);
+            this.refName = githubRef.substring(11);
             this.actionType = "commit";
         } else if (githubRef.startsWith("refs/tags/")) {
-            this.refName = githubRef.substr(10);
+            this.refName = githubRef.substring(10);
             this.actionType = "tag";
         } else {
             core.warning(`WARNING: Unrecognized GITHUB_REF found: ${githubRef}.`);
@@ -41,12 +41,5 @@ export class ContextHelper {
      */
     public getNormalizedRefName(): string {
         return this.normalizedRefName;
-    }
-
-    /**
-     * Returns the unchanged ref name (tag or branch name usually).
-     */
-    public getRefName(): string {
-        return this.refName;
     }
 }

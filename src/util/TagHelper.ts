@@ -64,16 +64,14 @@ export class TagHelper {
         const githubSha = process.env.GITHUB_SHA!;
         const now = new Date();
 
-        /* eslint-disable newline-per-chained-call */
         return tagFormat
             .split("$BRANCH").join(this.contextHelper.getNormalizedRefName())
-            .split("$SHA").join(githubSha.substr(0, 7))
+            .split("$SHA").join(githubSha.substring(0, 7))
             .split("$YYYY").join(now.getFullYear().toString())
             .split("$MM").join((now.getMonth() + 1).toString().padStart(2, "0"))
             .split("$DD").join(now.getDate().toString().padStart(2, "0"))
             .split("$HH").join(now.getHours().toString().padStart(2, "0"))
             .split("$mm").join(now.getMinutes().toString().padStart(2, "0"))
             .split("$SS").join(now.getSeconds().toString().padStart(2, "0"));
-        /* eslint-enable newline-per-chained-call */
     }
 }

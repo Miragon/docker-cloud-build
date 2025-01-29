@@ -5,11 +5,8 @@ import { parseInput } from "./api/InputParser";
 import { CloudAuthenticationHelper } from "./gcp/CloudAuthenticationHelper";
 import { CloudBuildClient } from "./gcp/CloudBuildClient";
 import { CloudStorageClient } from "./gcp/CloudStorageClient";
-import { CommitStatusClient } from "./github/CommitStatusClient";
 import { ContextHelper } from "./github/ContextHelper";
-import { ReleaseInformationClient } from "./github/ReleaseInformationClient";
 import { ArchiveClient } from "./util/ArchiveClient";
-import { ImageNameHelper } from "./util/ImageNameHelper";
 import { printImageSummary } from "./util/LogHelper";
 import { TagHelper } from "./util/TagHelper";
 
@@ -20,7 +17,6 @@ async function run(): Promise<void> {
 
     const input = parseInput();
     const contextHelper = new ContextHelper();
-    const actionType = contextHelper.getActionType();
 
     // 2. Initialize GCP clients
 
@@ -66,12 +62,8 @@ async function run(): Promise<void> {
 
     // 5. Initialize image name and tags
 
-    const imageNameHelper = new ImageNameHelper(
-        input.gcp.gcr.host,
-        input.gcp.projectId,
-        input.image.name
-    );
-    const imageName = imageNameHelper.getImageName();
+    const repository = input.gcp.artifactRegistry.useGcr ? input.gcp.projectId : input.gcp.artifactRegistry.repository;
+    const imageName = `${input.gcp.artifactRegistry.host}/${repository}/${input.image.name}`;
 
     const tagHelper = new TagHelper(contextHelper);
     const tagInformation = tagHelper.getTags(
@@ -122,9 +114,9 @@ async function run(): Promise<void> {
 
     if (buildResult.error) {
         throw new Error("Cloud Build failed.\n"
-            + `${"Message: ".padEnd(14, " ")}${buildResult.error.message}\n`
-            + `${"Code: ".padEnd(14, " ")}${buildResult.error.code}\n`
-            + `${"Build Logs: ".padEnd(14, " ")}${buildResult.logsUrl}`);
+            + `Message:      ${buildResult.error.message}\n`
+            + `Code:         ${buildResult.error.code}\n`
+            + `Build Logs:   ${buildResult.logsUrl}`);
     }
 
     core.info("Build was successful!");
@@ -132,71 +124,7 @@ async function run(): Promise<void> {
 
     core.endGroup();
 
-    // 9. Set GitHub commit status
-
-    if (!input.github.disabled) {
-        core.startGroup("Step 3: Updating GitHub");
-    } else {
-        core.startGroup("Step 3: Updating GitHub (SKIPPED)");
-    }
-
-    if (!input.github.disabled && !input.github.commitStatus.disabled && actionType === "commit") {
-        try {
-            core.info("Setting commit status...");
-
-            // Would have thrown in parseInput if token was not set
-            const commitStatusClient = new CommitStatusClient(input.github.token!);
-            await commitStatusClient.updateCommitStatus(
-                tagInformation,
-                input.github.commitStatus.title,
-                input.github.commitStatus.description,
-                input.github.commitStatus.all,
-                imageNameHelper
-            );
-        } catch (e) {
-            let errorMessage = "Failed to set commit status. Build was still successful though.";
-            if (e instanceof Error) {
-                errorMessage = e.message;
-            }
-            core.error(errorMessage);
-        }
-    } else if (actionType !== "commit") {
-        core.info("Not setting commit status since build was not caused by a commit.");
-    } else {
-        core.info("Not setting commit status because it is disabled.");
-    }
-
-    // 10. Update release information
-
-    if (!input.github.disabled
-        && !input.github.releaseInformation.disabled
-        && process.env.GITHUB_EVENT_NAME === "release") {
-        core.info("Updating release information...");
-        try {
-            // Would have thrown in parseInput if token was not set
-            const releaseInformationClient = new ReleaseInformationClient(input.github.token!);
-            await releaseInformationClient.addImageListToReleaseInformation(
-                contextHelper.getRefName(),
-                input.github.releaseInformation.all,
-                tagInformation,
-                imageNameHelper
-            );
-        } catch (e) {
-            let errorMessage = "Failed to set commit status. Build was still successful though.";
-            if (e instanceof Error) {
-                errorMessage = e.message;
-            }
-            core.error(errorMessage);
-        }
-    } else if (process.env.GITHUB_EVENT_NAME !== "release") {
-        core.info("Not updating release information because this build was not caused by a release.");
-    } else {
-        core.info("Not updating release information because it was disabled.");
-    }
-
-    core.endGroup();
-
-    // 11. Print image summary and set outputs
+    // 9. Print image summary and set outputs
 
     printImageSummary(buildResult);
     core.setOutput("full-image-name", imageName);
@@ -216,4 +144,9 @@ const asyncRun = async (): Promise<void> => {
     }
 };
 
-asyncRun();
+asyncRun()
+    .catch(e => {
+        core.error("An unexpected error occurred.");
+        core.error(e);
+        core.setFailed("An unexpected error occurred.");
+    });

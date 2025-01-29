@@ -1,21 +1,5 @@
 import * as core from "@actions/core";
 
-declare type DescriptionSize = "large" | "medium" | "small" | "tiny";
-const DESCRIPTION_SIZES = [
-    "large",
-    "medium",
-    "small",
-    "tiny"
-];
-
-declare type GcrRegion = "gcr.io" | "eu.gcr.io" | "us.gcr.io" | "asia.gcr.io";
-const GCR_REGIONS = [
-    "gcr.io",
-    "eu.gcr.io",
-    "us.gcr.io",
-    "asia.gcr.io"
-];
-
 export interface InputParams {
     gcp: {
         projectId: string;
@@ -23,8 +7,10 @@ export interface InputParams {
         cloudStorage: {
             bucket: string;
         };
-        gcr: {
-            host: GcrRegion;
+        artifactRegistry: {
+            useGcr: boolean;
+            host: string | undefined;
+            repository: string | undefined;
         };
     };
     image: {
@@ -35,20 +21,6 @@ export interface InputParams {
             latest: boolean;
             branchLatest: boolean;
             additionalTags: string[];
-        };
-    };
-    github: {
-        token: string | undefined;
-        disabled: boolean;
-        commitStatus: {
-            disabled: boolean;
-            all: boolean;
-            description: DescriptionSize;
-            title: string;
-        };
-        releaseInformation: {
-            disabled: boolean;
-            all: boolean;
         };
     };
 }
@@ -86,20 +58,6 @@ const getOptionalBooleanParam = (name: string, defaultValue: boolean): boolean =
     }
 };
 
-const invalidEnumArgument = (argument: string, expected: string[], actual: string): string => {
-    return `Invalid value passed for argument ${argument}. `
-        + `Expected one of ${expected.join(", ")}, but got ${actual}.`;
-};
-
-const invalidStringArgument = (argument: string, expected: string, actual: string): string => {
-    return `Invalid value passed for argument ${argument}. `
-        + `Expected ${expected}, but got ${actual}.`;
-};
-
-const throwLoadInputError = (message: string) => {
-    throw new Error(`Reading input parameters failed: ${message}`);
-};
-
 /**
  * Loads the input arguments passed to this action.
  * Uses default values if no value is passed and the argument is optional.
@@ -109,7 +67,9 @@ export const parseInput = (): InputParams => {
     const gcpProjectId = getRequiredStringParam("gcp-project-id");
     const gcpServiceAccountKey = getRequiredStringParam("gcp-service-account-key");
     const gcpCloudStorageBucket = getOptionalStringParam("gcp-cloud-storage-bucket", `${gcpProjectId}_cloudbuild`);
-    const gcpGcrRegion = getOptionalStringParam("gcp-gcr-region", "eu.gcr.io");
+    const gcpGarUseGcr = getOptionalBooleanParam("gcp-artifact-registry-use-gcr", false);
+    const gcpGarHost = gcpGarUseGcr ? undefined : getOptionalStringParam("gcp-artifact-registry-host", "europe.pkg.dev");
+    const gcpGarRepository = gcpGarUseGcr ? undefined : getRequiredStringParam("gcp-artifact-registry-repository");
 
     const imageName = getRequiredStringParam("image-name");
     const imageSources = getRequiredStringArrayParam("image-sources");
@@ -118,37 +78,6 @@ export const parseInput = (): InputParams => {
     const imageTagBranchLatest = getOptionalBooleanParam("image-tag-branch-latest", false);
     const imageTagAdditionalTags = getOptionalStringArrayParam("image-tag-additional-tags", []);
 
-    const githubToken = getOptionalStringParam("github-token", "");
-    const githubDisabled = getOptionalBooleanParam("github-disabled", false);
-    const githubCommitStatusDisabled = getOptionalBooleanParam("github-commit-status-disabled", false);
-    const githubCommitStatusAll = getOptionalBooleanParam("github-commit-status-all", false);
-    const githubCommitStatusDescription = getOptionalStringParam("github-commit-status-description", "small");
-    const githubCommitStatusTitle = getOptionalStringParam("github-commit-status-title", "Docker Image");
-    const githubReleaseInformationDisabled = getOptionalBooleanParam("github-release-information-disabled", false);
-    const githubReleaseInformationAll = getOptionalBooleanParam("github-release-information-all", false);
-
-    if (GCR_REGIONS.indexOf(gcpGcrRegion) === -1) {
-        throwLoadInputError(invalidEnumArgument(
-            "gcp-gcr-region", GCR_REGIONS, gcpGcrRegion
-        ));
-    }
-
-    if (!githubToken && !githubDisabled) {
-        throwLoadInputError("You must either set github-disabled to true or set github-token!");
-    }
-
-    if (DESCRIPTION_SIZES.indexOf(githubCommitStatusDescription) === -1) {
-        throwLoadInputError(invalidEnumArgument(
-            "github-commit-status-description", DESCRIPTION_SIZES, githubCommitStatusDescription
-        ));
-    }
-
-    if (githubCommitStatusTitle.length === 0) {
-        throwLoadInputError(invalidStringArgument(
-            "github-commit-status-title", "non-empty string", "empty string"
-        ));
-    }
-
     return {
         gcp: {
             projectId: gcpProjectId,
@@ -156,22 +85,10 @@ export const parseInput = (): InputParams => {
             cloudStorage: {
                 bucket: gcpCloudStorageBucket
             },
-            gcr: {
-                host: gcpGcrRegion as GcrRegion
-            }
-        },
-        github: {
-            disabled: githubDisabled,
-            token: githubToken,
-            commitStatus: {
-                disabled: githubCommitStatusDisabled,
-                all: githubCommitStatusAll,
-                description: githubCommitStatusDescription as DescriptionSize,
-                title: githubCommitStatusTitle
-            },
-            releaseInformation: {
-                disabled: githubReleaseInformationDisabled,
-                all: githubReleaseInformationAll
+            artifactRegistry: {
+                useGcr: gcpGarUseGcr,
+                host: gcpGarHost,
+                repository: gcpGarRepository
             }
         },
         image: {

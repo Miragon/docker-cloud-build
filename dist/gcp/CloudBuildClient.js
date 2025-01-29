@@ -42,9 +42,9 @@ export class CloudBuildClient {
             },
             projectId: options.projectId
         };
-        core.debug(`Starting build with options\n\n: ${JSON.stringify(buildOptions, undefined, 2)}`);
         let result;
         try {
+            core.debug(`Starting build with options\n\n: ${JSON.stringify(buildOptions, undefined, 2)}`);
             const [value] = await this.client.createBuild(buildOptions);
             // Broken types
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -102,6 +102,8 @@ export class CloudBuildClient {
             };
         }
         catch (e) {
+            core.error("Unexpected error");
+            core.error(e);
             let errorMessage = "System error!";
             if (e instanceof Error) {
                 errorMessage = e.message;

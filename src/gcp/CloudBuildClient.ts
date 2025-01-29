@@ -78,11 +78,11 @@ export class CloudBuildClient {
             },
             projectId: options.projectId
         };
-        core.debug(`Starting build with options\n\n: ${JSON.stringify(buildOptions, undefined, 2)}`);
 
         let result: IBuild | undefined;
 
         try {
+            core.debug(`Starting build with options\n\n: ${JSON.stringify(buildOptions, undefined, 2)}`);
             const [value] = await this.client.createBuild(buildOptions);
 
             // Broken types
@@ -148,6 +148,8 @@ export class CloudBuildClient {
                 }
             };
         } catch (e) {
+            core.error("Unexpected error");
+            core.error(e as Error);
             let errorMessage = "System error!";
             if (e instanceof Error) {
                 errorMessage = e.message;

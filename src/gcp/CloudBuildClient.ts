@@ -7,6 +7,7 @@ import Status = google.devtools.cloudbuild.v1.Build.Status;
 import IBuild = google.devtools.cloudbuild.v1.IBuild;
 import IBuildOperationMetadata = google.devtools.cloudbuild.v1.IBuildOperationMetadata;
 import Operation = google.longrunning.Operation;
+import ICreateBuildRequest = google.devtools.cloudbuild.v1.ICreateBuildRequest;
 
 export interface CloudBuildOptions {
     projectId: string,
@@ -52,7 +53,7 @@ export class CloudBuildClient {
     public async buildDockerImage(options: CloudBuildOptions): Promise<CloudBuildResult> {
         const imageNames = options.build.tags.map(tag => `${options.build.image}:${tag}`);
 
-        const buildOptions = {
+        const buildOptions: ICreateBuildRequest = {
             build: {
                 source: {
                     storageSource: {
@@ -81,7 +82,12 @@ export class CloudBuildClient {
         let result: IBuild | undefined;
 
         try {
-            const [value] = await this.client.createBuild(buildOptions);
+            core.debug(`Starting build with options\n\n: ${JSON.stringify(buildOptions, undefined, 2)}`);
+            const promise = this.client.createBuild(buildOptions);
+            core.debug("Started build: " + promise);
+            const [value, operation, test] = await promise;
+            core.debug("Operation" + JSON.stringify(operation, undefined, 2));
+            core.debug("Test" + JSON.stringify(test, undefined, 2));
 
             // Broken types
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -146,6 +152,10 @@ export class CloudBuildClient {
                 }
             };
         } catch (e) {
+            core.error("Unexpected error");
+            core.error("Name: " + String((e as Error).name));
+            core.error("Message: " + String((e as Error).message));
+            core.error("Stack: " + String((e as Error).stack));
             let errorMessage = "System error!";
             if (e instanceof Error) {
                 errorMessage = e.message;

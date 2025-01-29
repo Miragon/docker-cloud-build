@@ -1,11 +1,11 @@
 name: "Docker Cloud Build"
-description: "Builds a docker image using Google Cloud Build and pushes it to Google Container Registry."
+description: "Builds a docker image using Google Cloud Build and pushes it to Google Artifact Registry."
 author: "Alexander Praschek <alexander.praschek@miragon.io>"
 inputs:
   gcp-project-id:
     required: true
     description: >-
-      The GCP Project ID to use.
+      The project ID to use for all GCP services.
   gcp-service-account-key:
     required: true
     description: >-
@@ -13,30 +13,50 @@ inputs:
   gcp-cloud-storage-bucket:
     required: false
     description: >-
-      Google Cloud Storage Bucket used to temporarily store build input files.
-      If not specified, the default value is ${gcp-project-id}_cloudbuild.
-  gcp-gcr-region:
+      The Cloud Storage bucket to use to temporarily store the Cloud Build input files. 
+      
+      By default, a bucket with the name `${projectId}_cloudbuild` will be used. 
+      The uploaded files will be deleted after the build has finished. 
+      You have to create the specified bucket first manually.
+  gcp-registry-use-gcr:
     required: false
     description: >-
-      The Google Container Registry region to use (gcr.io, us.gcr.io, eu.gcr.io, asia.gcr.io).
-      Defaults to eu.gcr.io.
+      Enables support for former Google Container Registry repositories migrated to Google Artifact Registry. Defaults to false.
+  gcp-registry-host:
+    required: false
+    description: >-
+      The host to use for Google Artifact Registry. Defaults to europe-docker.pkg.dev.
+      
+      Find all supported values in the GCP documentation (https://cloud.google.com/artifact-registry/docs/repositories/repo-locations). 
+      If you want to use a former GCR repository, this value must be set to one of the GCR endpoints (e.g. `eu.gcr.io`).
+  gcp-registry-repository:
+    required: false
+    description: >-
+      **Required unless you use GCR.** 
+      The repository to use for Google Artifact Registry. 
+      
+      You have to create the specified repository first manually. 
+      If you want to use a former GCR repository, you can omit this value. The `gcp-project-id` will be used instead. 
+      If you want to use a repository in another project, you can still use this parameter to override the project ID default value.
   image-name:
     required: true
     description: >-
-      The name of the built image.
+      The name of the image to build.
   image-sources:
     required: true
     description: >-
-      A comma-separated list of files and folders to use as build source. Patterns such as * and ** are supported.
-      Paths are relative to the repository root. All matched files and folders are copied to a common directory before
-      being passed to Cloud Build.
+      The sources to use to build the image. 
+      
+      You can include any source files that are within your GitHub workspace, such as build artifacts or Dockerfiles. 
+      The option also supports globstar wildcards such as `?`, `*`, `**`, or `[...]`. 
+      Read https://github.com/actions/toolkit/tree/master/packages/glob for more details.
   image-tag-format:
     required: false
     description: >-
       The format to tag the built image with, if the build was caused by a commit. Builds caused by a tag are always
       labelled with that tag. The format string can contain the following list of parameters. All other parts of the
       string are treated as constants. Make sure you only use characters allowed in a docker tag.
-      Defaults to "$BRANCH-$SHA-$YYYY.$MM.$DD-$HH.$mm.$SS", for example "main-4e83ab-2021.04.22-09.08.12".
+      Defaults to "$BRANCH-$SHA-$YYYY.$MM.$DD-$HH.$mm.$SS", for example "main-4e83ab-2025.01.22-09.08.12".
       Time is based on the server timezone.
       $BRANCH     The branch name, normalized.
       $SHA        The 7-digit SHA of the commit
@@ -58,45 +78,6 @@ inputs:
     required: false
     description: >-
       A comma-separated list of additional tags to use for the built image. Defaults to false.
-  github-token:
-    required: false
-    description: >-
-      Token to use to set the commit status. The token is required unless ${github-disabled} is true.
-  github-disabled:
-    required: false
-    description: >-
-      Whether to disable all GitHub integrations. Defaults to false.
-  github-commit-status-disabled:
-    required: false
-    description: >-
-      Whether to disable setting the commit status to the name and tags of the built docker images. Defaults to false.
-  github-commit-status-all:
-    required: false
-    description: >-
-      Whether to put all image tags into separate commit status entry. If false, only the primary tag will be added.
-      Defaults to false.
-  github-commit-status-description:
-    required: false
-    description: >-
-      The format in which the built images will be displayed. Can be one of the following values. Defaults to small.
-      - large     host/project/image:tag    eu.gcr.io/flowsquad-io/test-image:latest
-      - medium    project/image:tag         flowsquad-io/test-image:latest
-      - small     image:tag                 test-image:latest
-      - tiny      tag                       latest
-  github-commit-status-title:
-    required: false
-    description: >-
-      The title to use for the commit status. Will be suffixed with an index when github-commit-status-all is true.
-      Defaults to "Docker Image".
-  github-release-information-disabled:
-    required: false
-    description: >-
-      Whether to disable updating the release information with the built docker images. Defaults to false.
-  github-release-information-all:
-    required: false
-    description: >-
-      Whether to add all built image tags to the list of images. Else only the image tagged with the release tag will
-      be added. Defaults to false.
 outputs:
   full-image-name:
     description: >-
@@ -105,7 +86,7 @@ outputs:
     description: >-
       Contains a comma-separated list of tags for the built image.
 runs:
-  using: "node16"
+  using: "node20"
   main: "dist/index.js"
 branding:
   color: "blue"

@@ -5,7 +5,7 @@ import path from "path";
 import { create as createTar } from "tar";
 
 export class ArchiveClient {
-    private workspace: string;
+    private readonly workspace: string;
 
     /**
      * Creates a new instance.
@@ -35,13 +35,13 @@ export class ArchiveClient {
 
             for (const source of patterns) {
                 core.debug(`Got the following pattern with workspace ${this.workspace}: ${source}`);
-                const globber = await createGlob(source, {
+                const glob = await createGlob(source, {
                     followSymbolicLinks: false,
                     implicitDescendants: false
                 });
-                const patternMatches = (await globber.glob())
+                const patternMatches = (await glob.glob())
                     .filter(entry => entry.startsWith(this.workspace))
-                    .map(entry => entry.substr(this.workspace.length));
+                    .map(entry => entry.substring(this.workspace.length));
                 core.debug(`Found the following matching files: \n${patternMatches.join("\n")}`);
                 sources.push(...patternMatches);
             }

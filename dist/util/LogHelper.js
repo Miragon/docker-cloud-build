@@ -15,13 +15,23 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 }) : function(o, v) {
     o["default"] = v;
 });
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.printImageSummary = void 0;
 const core = __importStar(require("@actions/core"));
@@ -31,19 +41,17 @@ const core = __importStar(require("@actions/core"));
  * @param buildResult The Cloud Build result to print
  */
 const printImageSummary = (buildResult) => {
-    var _a, _b;
     core.info("Build was successful!");
     core.info(`Build logs are available here: ${buildResult.logsUrl}`);
-    if (((_a = buildResult.result) === null || _a === void 0 ? void 0 : _a.images.length) === 0) {
+    if (buildResult.result?.images.length === 0) {
         core.info("No images built.");
     }
     else {
         core.info("Built the following images:\n");
         const nameToDigest = [];
         let longestName = 0;
-        (_b = buildResult.result) === null || _b === void 0 ? void 0 : _b.images.forEach(image => {
-            var _a;
-            const digest = (_a = image.digest) === null || _a === void 0 ? void 0 : _a.substr(0, 15);
+        buildResult.result?.images.forEach(image => {
+            const digest = image.digest?.substring(0, 15);
             const name = image.name;
             if (name && name.length > longestName) {
                 longestName = name.length;

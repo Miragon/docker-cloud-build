@@ -5,7 +5,7 @@ import { resolve } from "path";
 import { v4 } from "uuid";
 
 export class CloudAuthenticationHelper {
-    private authFile: string;
+    private readonly authFile: string;
 
     /**
      * Creates a new instance.

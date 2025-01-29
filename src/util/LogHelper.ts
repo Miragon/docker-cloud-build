@@ -19,7 +19,7 @@ export const printImageSummary = (buildResult: CloudBuildResult): void => {
         let longestName = 0;
 
         buildResult.result?.images.forEach(image => {
-            const digest = image.digest?.substr(0, 15);
+            const digest = image.digest?.substring(0, 15);
             const name = image.name;
             if (name && name.length > longestName) {
                 longestName = name.length;

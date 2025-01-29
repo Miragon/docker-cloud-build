@@ -62,7 +62,9 @@ async function run(): Promise<void> {
 
     // 5. Initialize image name and tags
 
-    const imageName = `${input.gcp.registry.host}/${input.gcp.registry.repository}/${input.image.name}`;
+    // Repository might contain a different value if specified, so we can't use projectId directly in case of GCR
+    const repository = input.gcp.registry.useGcr ? input.gcp.registry.repository : `${input.gcp.projectId}/${input.gcp.registry.repository}`;
+    const imageName = `${input.gcp.registry.host}/${repository}/${input.image.name}`;
 
     const tagHelper = new TagHelper(contextHelper);
     const tagInformation = tagHelper.getTags(

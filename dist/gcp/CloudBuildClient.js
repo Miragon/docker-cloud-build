@@ -42,6 +42,7 @@ export class CloudBuildClient {
             },
             projectId: options.projectId
         };
+        core.debug(`Starting build with options\n\n: ${JSON.stringify(buildOptions, undefined, 2)}`);
         let result;
         try {
             const [value] = await this.client.createBuild(buildOptions);

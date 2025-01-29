@@ -7,6 +7,7 @@ import Status = google.devtools.cloudbuild.v1.Build.Status;
 import IBuild = google.devtools.cloudbuild.v1.IBuild;
 import IBuildOperationMetadata = google.devtools.cloudbuild.v1.IBuildOperationMetadata;
 import Operation = google.longrunning.Operation;
+import ICreateBuildRequest = google.devtools.cloudbuild.v1.ICreateBuildRequest;
 
 export interface CloudBuildOptions {
     projectId: string,
@@ -52,7 +53,7 @@ export class CloudBuildClient {
     public async buildDockerImage(options: CloudBuildOptions): Promise<CloudBuildResult> {
         const imageNames = options.build.tags.map(tag => `${options.build.image}:${tag}`);
 
-        const buildOptions = {
+        const buildOptions: ICreateBuildRequest = {
             build: {
                 source: {
                     storageSource: {
@@ -77,6 +78,7 @@ export class CloudBuildClient {
             },
             projectId: options.projectId
         };
+        core.debug(`Starting build with options\n\n: ${JSON.stringify(buildOptions, undefined, 2)}`);
 
         let result: IBuild | undefined;
 

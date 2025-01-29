@@ -86,7 +86,7 @@ outputs:
     description: >-
       Contains a comma-separated list of tags for the built image.
 runs:
-  using: "node20"
+  using: "node16"
   main: "dist/index.js"
 branding:
   color: "blue"

@@ -35,8 +35,6 @@
     "@octokit/rest": "^18.0.0"
   },
   "devDependencies": {
-    "@eslint/compat": "^1.2.5",
-    "@stylistic/eslint-plugin": "^3.0.0",
     "@types/fs-extra": "^11.0.1",
     "@types/node": "^20.4.2",
     "@types/tar": "^6.1.5",

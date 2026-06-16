@@ -1,6 +1,6 @@
 {
   "name": "@miragon/docker-cloud-build",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "private": true,
   "description": "Builds a docker image using Google Cloud Build and pushes it to Google Artifact Registry.",
   "author": "Alexander Praschek <alexander.praschek@miragon.io>",
@@ -18,7 +18,7 @@
     "url": "ssh://git@github.com/Miragon/docker-cloud-build.git"
   },
   "scripts": {
-    "dist": "rimraf dist && eslint src && tsc && ncc cache clean && ncc build src/index.ts -o dist --minify --no-cache --target es2023 --license licenses.txt",
+    "dist": "rimraf dist && eslint src && tsc && ncc cache clean && ncc build src/index.ts -o dist --minify --no-cache --target es2024 --license licenses.txt",
     "lint": "eslint src"
   },
   "dependencies": {
@@ -34,7 +34,7 @@
     "@eslint/compat": "^1.2.5",
     "@stylistic/eslint-plugin": "^3.0.0",
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^22.12.0",
+    "@types/node": "^24",
     "@types/tar": "^6.1.13",
     "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^8.22.0",
@@ -46,7 +46,7 @@
     "typescript": "^5.7.3"
   },
   "engines": {
-    "node": "*"
+    "node": ">=24"
   },
   "packageManager": "yarn@4.6.0"
 }

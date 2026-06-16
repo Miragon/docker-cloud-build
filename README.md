@@ -14,7 +14,7 @@ Just include the action in your workflow like this:
 
 ```yaml
 - name: Build Docker Image
-  uses: Miragon/docker-cloud-build@v2.0.0
+  uses: Miragon/docker-cloud-build@v2.1.0
   with:
     gcp-project-id: my-project-id
     gcp-service-account-key: ${{ secrets.GCP_SA_KEY }}
@@ -103,7 +103,7 @@ jobs:
         run: # Build your application here, e.g.: ./gradlew build
 
       - name: Build Docker Image
-        uses: Miragon/docker-cloud-build@v2.0.0
+        uses: Miragon/docker-cloud-build@v2.1.0
         with:
           gcp-project-id: my-project-id
           gcp-service-account-key: my-service-account-key

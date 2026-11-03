@@ -97,7 +97,6 @@ async function run(): Promise<void> {
 
     // 7. Remove no longer required files
 
-    authenticationHelper.clean();
     try {
         core.debug("Removing uploaded input file");
         await storageClient.delete(input.gcp.cloudStorage.bucket, buildFileName);

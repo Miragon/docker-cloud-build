@@ -44,9 +44,8 @@ class CloudStorageClient {
      * @param authenticationHelper The authentication helper providing the credentials
      */
     constructor(authenticationHelper) {
-        const authFile = authenticationHelper.getAuthFile();
-        core.debug(`Initializing CloudStorageClient with auth file ${authFile}`);
-        this.client = new storage_1.Storage({ keyFilename: authFile });
+        core.debug("Initializing CloudStorageClient");
+        this.client = new storage_1.Storage({ authClient: authenticationHelper.createAuthClient() });
     }
     /**
      * Uploads a file.

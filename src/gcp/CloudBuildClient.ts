@@ -45,9 +45,8 @@ export class CloudBuildClient {
      * @param authenticationHelper The authentication helper providing the credentials
      */
     constructor(authenticationHelper: CloudAuthenticationHelper) {
-        const authFile = authenticationHelper.getAuthFile();
-        core.debug(`Initializing CloudStorageClient with auth file ${authFile}`);
-        this.client = new BuildClient({ keyFile: authFile });
+        core.debug("Initializing CloudBuildClient");
+        this.client = new BuildClient({ authClient: authenticationHelper.createAuthClient() });
     }
 
     public async buildDockerImage(options: CloudBuildOptions): Promise<CloudBuildResult> {

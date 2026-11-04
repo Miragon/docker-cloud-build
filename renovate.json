@@ -1,4 +1,13 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["local>Miragon/github-governance//renovate/default"]
+  "description": [
+    "Copy of the org preset renovate/default.json in Miragon/github-governance. This repo is public, and the Mend Renovate App does not load presets from private repos for public ones.",
+    "Keep it in line with the org preset."
+  ],
+  "extends": ["config:recommended", "group:allNonMajor"],
+  "timezone": "Europe/Berlin",
+  "schedule": ["* 22-23 * * 0", "* 0-5 * * 1"],
+  "minimumReleaseAge": "3 days",
+  "osvVulnerabilityAlerts": true,
+  "labels": ["dependencies"]
 }

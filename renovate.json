@@ -8,6 +8,8 @@
   "timezone": "Europe/Berlin",
   "schedule": ["* 22-23 * * 0", "* 0-5 * * 1"],
   "minimumReleaseAge": "3 days",
+  "prHourlyLimit": 0,
+  "prConcurrentLimit": 0,
   "osvVulnerabilityAlerts": true,
   "labels": ["dependencies"]
 }

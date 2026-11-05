@@ -348,7 +348,7 @@ __metadata:
   dependencies:
     "@actions/core": "npm:^1.11.1"
     "@actions/glob": "npm:^0.7.0"
-    "@eslint/compat": "npm:^1.2.5"
+    "@eslint/compat": "npm:^2.0.0"
     "@google-cloud/cloudbuild": "npm:^6.4.0"
     "@google-cloud/storage": "npm:^8.4.0"
     "@stylistic/eslint-plugin": "npm:^3.0.0"

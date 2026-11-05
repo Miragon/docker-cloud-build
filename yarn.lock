@@ -405,7 +405,6 @@ __metadata:
     "@stylistic/eslint-plugin": "npm:^5.0.0"
     "@types/fs-extra": "npm:^11.0.4"
     "@types/node": "npm:^26.0.0"
-    "@types/tar": "npm:^7.0.0"
     "@typescript-eslint/eslint-plugin": "npm:^8.72.0"
     "@typescript-eslint/parser": "npm:^8.72.0"
     "@vercel/ncc": "npm:^0.45.0"
@@ -619,15 +618,6 @@ __metadata:
   dependencies:
     undici-types: "npm:~8.9.0"
   checksum: 10c0/5cb63f644f6e85a257a9cd2403cbcbe196760e2a35fd3ec9fb8b5cff663e14cc832b198cc17b53f870a2e30900ed45a1fb3f53e6589aba26b8e8c484aa672053
-  languageName: node
-  linkType: hard
-
-"@types/tar@npm:^7.0.0":
-  version: 7.0.87
-  resolution: "@types/tar@npm:7.0.87"
-  dependencies:
-    tar: "npm:*"
-  checksum: 10c0/23243d293a9ae2cae647f39d56587f24bca947409d75afe9d44987d07dabca9e64ef2f5cb6cb561e14b6c2e1990c420f9d67ba27c9f73d0becd33595ec6464a5
   languageName: node
   linkType: hard
 
@@ -3676,7 +3666,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tar@npm:*, tar@npm:^7.4.3":
+"tar@npm:^7.4.3":
   version: 7.5.22
   resolution: "tar@npm:7.5.22"
   dependencies:

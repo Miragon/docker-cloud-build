@@ -95,7 +95,7 @@ class ArchiveClient {
             if (e instanceof Error) {
                 errorMessage = e.message;
             }
-            throw new Error(`Creating archive ${fileName} failed: ${errorMessage}`);
+            throw new Error(`Creating archive ${fileName} failed: ${errorMessage}`, { cause: e });
         }
     }
 }

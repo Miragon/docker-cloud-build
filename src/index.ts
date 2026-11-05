@@ -42,7 +42,7 @@ async function run(): Promise<void> {
             errorMessage = e.message;
         }
         core.endGroup();
-        throw new Error(`Could not create build input file: ${errorMessage}`);
+        throw new Error(`Could not create build input file: ${errorMessage}`, { cause: e });
     }
 
     // 4. Upload Cloud Build input file
@@ -57,7 +57,7 @@ async function run(): Promise<void> {
             errorMessage = e.message;
         }
         core.endGroup();
-        throw new Error(`Could not upload build input file: ${errorMessage}`);
+        throw new Error(`Could not upload build input file: ${errorMessage}`, { cause: e });
     }
 
     // 5. Initialize image name and tags
@@ -107,7 +107,7 @@ async function run(): Promise<void> {
         }
         core.endGroup();
         throw new Error(`Removing uploaded input file failed: ${errorMessage}
-            Please remove the file ${input.gcp.cloudStorage.bucket}/${buildFileName} manually.`);
+            Please remove the file ${input.gcp.cloudStorage.bucket}/${buildFileName} manually.`, { cause: e });
     }
 
     // 8. Print build results

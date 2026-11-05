@@ -66,7 +66,7 @@ class CloudStorageClient {
             if (e instanceof Error) {
                 errorMessage = e.message;
             }
-            throw new Error(`Could not upload ${fileName} to ${bucket}/${destination}: ${errorMessage}`);
+            throw new Error(`Could not upload ${fileName} to ${bucket}/${destination}: ${errorMessage}`, { cause: e });
         }
     }
     /**
@@ -84,7 +84,7 @@ class CloudStorageClient {
             if (e instanceof Error) {
                 errorMessage = e.message;
             }
-            throw new Error(`Could not delete file ${bucket}/${fileName}: ${errorMessage}`);
+            throw new Error(`Could not delete file ${bucket}/${fileName}: ${errorMessage}`, { cause: e });
         }
     }
 }

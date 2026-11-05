@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@eslint/compat": "^2.0.0",
-    "@stylistic/eslint-plugin": "^3.0.0",
+    "@stylistic/eslint-plugin": "^5.0.0",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^24",
     "@types/tar": "^6.1.13",

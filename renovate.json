@@ -20,6 +20,31 @@
   "labels": [
     "dependencies"
   ],
+  "customManagers": [
+    {
+      "description": "Ubuntu-Version der Ubicloud-Runner, etwa runs-on: ubicloud-standard-2-ubuntu-2404. Labels ohne Version (ubicloud-standard-2) folgen dem Standard von Ubicloud und bleiben unberührt.",
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^\\.github/workflows/[^/]+\\.ya?ml$/"
+      ],
+      "matchStrings": [
+        "runs-on:\\s*['\"]?ubicloud-standard-\\d+-ubuntu-(?<currentValue>\\d{4})"
+      ],
+      "depNameTemplate": "ubicloud-ubuntu",
+      "datasourceTemplate": "custom.ubicloud-ubuntu",
+      "versioningTemplate": "regex:^(?<major>\\d{2})(?<minor>\\d{2})$"
+    }
+  ],
+  "customDatasources": {
+    "ubicloud-ubuntu": {
+      "description": "Ubuntu-Versionen, für die Ubicloud Runner anbietet, aus der Label-Liste im Ubicloud-Repo.",
+      "defaultRegistryUrlTemplate": "https://raw.githubusercontent.com/ubicloud/ubicloud/main/config/github_runner_labels.yml",
+      "format": "yaml",
+      "transformTemplates": [
+        "{\"releases\": [$distinct($[$contains(name, /^ubicloud-standard-2-ubuntu-\\d{4}$/)].$substringAfter(name, \"-ubuntu-\")).{\"version\": $}]}"
+      ]
+    }
+  },
   "packageRules": [
     {
       "description": "@actions/glob >= 0.6 and @actions/core >= 3 ship as ES modules only. The action builds to CommonJS with ncc, which then leaves them unbundled and dist/index.js fails at start. Lift this once src/ is migrated to ESM.",
@@ -40,6 +65,13 @@
         "typescript"
       ],
       "allowedVersions": "<7.0.0"
+    },
+    {
+      "description": "Die Label-Liste von Ubicloud hat keine Release-Zeitpunkte. Ohne diese Regel bliebe das Update an minimumReleaseAge hängen.",
+      "matchDatasources": [
+        "custom.ubicloud-ubuntu"
+      ],
+      "minimumReleaseAge": null
     }
   ]
 }

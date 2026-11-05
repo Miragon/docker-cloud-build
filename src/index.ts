@@ -1,6 +1,6 @@
 import * as core from "@actions/core";
 import { unlink } from "fs-extra";
-import { v4 } from "uuid";
+import { randomUUID } from "crypto";
 import { parseInput } from "./api/InputParser";
 import { CloudAuthenticationHelper } from "./gcp/CloudAuthenticationHelper";
 import { CloudBuildClient } from "./gcp/CloudBuildClient";
@@ -27,7 +27,7 @@ async function run(): Promise<void> {
     // 3. Create Cloud Build input file
 
     const rootFolder = "cloud-build-input";
-    const buildFileName = `build-${v4()}.tgz`;
+    const buildFileName = `build-${randomUUID()}.tgz`;
     const workspace = `${process.env.GITHUB_WORKSPACE!}/`;
 
     core.debug("Creating input file build.tgz");

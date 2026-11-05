@@ -33,6 +33,13 @@
         "@actions/core"
       ],
       "allowedVersions": "<3.0.0"
+    },
+    {
+      "description": "typescript-eslint supports TypeScript <6.1.0 only (8.72.1). Hold TypeScript below 7 and lift this once typescript-eslint supports TypeScript 7.",
+      "matchPackageNames": [
+        "typescript"
+      ],
+      "allowedVersions": "<7.0.0"
     }
   ]
 }

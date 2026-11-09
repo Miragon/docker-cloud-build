@@ -22,7 +22,7 @@
   ],
   "customManagers": [
     {
-      "description": "Ubuntu-Version der Ubicloud-Runner, etwa runs-on: ubicloud-standard-2-ubuntu-2404. Labels ohne Version (ubicloud-standard-2) folgen dem Standard von Ubicloud und bleiben unberührt.",
+      "description": "Ubuntu version of Ubicloud runners, e.g. runs-on: ubicloud-standard-2-ubuntu-2404. Labels without a version (ubicloud-standard-2) follow Ubicloud's default and stay untouched.",
       "customType": "regex",
       "managerFilePatterns": [
         "/^\\.github/workflows/[^/]+\\.ya?ml$/"
@@ -37,7 +37,7 @@
   ],
   "customDatasources": {
     "ubicloud-ubuntu": {
-      "description": "Ubuntu-Versionen, für die Ubicloud Runner anbietet, aus der Label-Liste im Ubicloud-Repo.",
+      "description": "Ubuntu versions Ubicloud offers runners for, read from the label list in the Ubicloud repo.",
       "defaultRegistryUrlTemplate": "https://raw.githubusercontent.com/ubicloud/ubicloud/main/config/github_runner_labels.yml",
       "format": "yaml",
       "transformTemplates": [
@@ -67,11 +67,18 @@
       "allowedVersions": "<7.0.0"
     },
     {
-      "description": "Die Label-Liste von Ubicloud hat keine Release-Zeitpunkte. Ohne diese Regel bliebe das Update an minimumReleaseAge hängen.",
+      "description": "Ubicloud's label list has no release timestamps. Without this rule the update would stay pending on minimumReleaseAge.",
       "matchDatasources": [
         "custom.ubicloud-ubuntu"
       ],
       "minimumReleaseAge": null
+    },
+    {
+      "description": "Only Docker Hub reports release timestamps. Images from gcr.io, ghcr.io, quay.io and other registries come without delay instead of staying pending on minimumReleaseAge forever (Miragon/github-governance#14).",
+      "matchDatasources": [
+        "docker"
+      ],
+      "minimumReleaseAgeBehaviour": "timestamp-optional"
     }
   ]
 }

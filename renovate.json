@@ -72,6 +72,13 @@
         "custom.ubicloud-ubuntu"
       ],
       "minimumReleaseAge": null
+    },
+    {
+      "description": "Nur Docker Hub liefert Release-Zeitpunkte. Images aus gcr.io, ghcr.io, quay.io und anderen Registries kommen ohne Wartezeit, statt dauerhaft an minimumReleaseAge zu hängen (Miragon/github-governance#14).",
+      "matchDatasources": [
+        "docker"
+      ],
+      "minimumReleaseAgeBehaviour": "timestamp-optional"
     }
   ]
 }

@@ -1,0 +1,72 @@
+# Rebuilds dist/ on Renovate branches: the action runs from the checked-in dist/, and Renovate only changes package.json
+# and yarn.lock. The job build runs the code of the updated packages and gets no secret. The job push commits its dist/
+# and pushes with the deploy key in the secret DIST_DEPLOY_KEY (write access to this repo only): for a push with
+# GITHUB_TOKEN, GitHub starts no pull_request runs without approval, and the PR lacks check. The push runs this
+# workflow again, which then builds the same dist/ and ends without a commit.
+name: dist
+
+on:
+  push:
+    branches: ["renovate/**"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-26.04
+    timeout-minutes: 10
+    env:
+      COREPACK_ENABLE_DOWNLOAD_PROMPT: 0
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      # Major as runs.using in action.yml
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+      - run: corepack enable
+      - run: yarn install --immutable
+      - run: yarn dist
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: dist
+          path: dist/
+          if-no-files-found: error
+          retention-days: 1
+
+  push:
+    needs: build
+    runs-on: ubuntu-26.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: rm -rf dist
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: dist
+          path: dist/
+      - name: Commit and push dist/
+        env:
+          DEPLOY_KEY: ${{ secrets.DIST_DEPLOY_KEY }}
+        run: |
+          git add -A -- dist/
+          git diff --cached --quiet && exit 0
+          (umask 077 && printf '%s\n' "$DEPLOY_KEY" >"$RUNNER_TEMP/deploy-key")
+          # Host key of github.com from api.github.com/meta
+          echo 'github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl' \
+            >"$RUNNER_TEMP/known_hosts"
+          # Author as in gitIgnoredAuthors of renovate.json
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+            commit -q -m 'chore: rebuild dist'
+          # No force: if Renovate pushed again meanwhile, GitHub refuses, and that push runs this workflow again
+          ssh="ssh -i $RUNNER_TEMP/deploy-key -o IdentitiesOnly=yes -o UserKnownHostsFile=$RUNNER_TEMP/known_hosts"
+          GIT_SSH_COMMAND="$ssh -o StrictHostKeyChecking=yes" \
+            git push -q "git@github.com:$GITHUB_REPOSITORY.git" "HEAD:refs/heads/$GITHUB_REF_NAME"

@@ -14,7 +14,7 @@ Just include the action in your workflow like this:
 
 ```yaml
 - name: Build Docker Image
-  uses: Miragon/docker-cloud-build@v2.1.4
+  uses: Miragon/docker-cloud-build@v2.1.6
   with:
     gcp-project-id: my-project-id
     gcp-service-account-key: ${{ secrets.GCP_SA_KEY }}
@@ -103,7 +103,7 @@ jobs:
         run: # Build your application here, e.g.: ./gradlew build
 
       - name: Build Docker Image
-        uses: Miragon/docker-cloud-build@v2.1.4
+        uses: Miragon/docker-cloud-build@v2.1.6
         with:
           gcp-project-id: my-project-id
           gcp-service-account-key: my-service-account-key
@@ -138,7 +138,9 @@ There are many ways in which you can contribute to this repository, and not all 
 ## Development Notice
 
 To create a new release, use the task `yarn dist`. It runs ESLint, clears the cache, and creates a distributable build
-including all required dependencies using @vercel/ncc.
+including all required dependencies using @vercel/ncc. Commit `dist/` with your change: the workflow `check` runs
+`yarn dist` for every pull request and fails if `dist/` differs from the build. On Renovate branches, the workflow
+`dist` rebuilds and commits `dist/`.
 
 ## License
 

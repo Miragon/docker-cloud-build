@@ -2,7 +2,8 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "description": [
     "Copy of the org preset renovate/default.json in Miragon/github-governance. This repo is public, and the Mend Renovate App does not load presets from private repos for public ones.",
-    "Keep it in line with the org preset."
+    "Keep it in line with the org preset.",
+    "Only here: gitIgnoredAuthors, so the dist/ commit of .github/workflows/dist.yml does not stop Renovate from rebasing. The rebase drops it, and the push runs dist.yml again."
   ],
   "extends": [
     "config:recommended",
@@ -17,6 +18,9 @@
   "prHourlyLimit": 0,
   "prConcurrentLimit": 0,
   "osvVulnerabilityAlerts": true,
+  "gitIgnoredAuthors": [
+    "41898282+github-actions[bot]@users.noreply.github.com"
+  ],
   "labels": [
     "dependencies"
   ],

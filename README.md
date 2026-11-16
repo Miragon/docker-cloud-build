@@ -138,7 +138,9 @@ There are many ways in which you can contribute to this repository, and not all 
 ## Development Notice
 
 To create a new release, use the task `yarn dist`. It runs ESLint, clears the cache, and creates a distributable build
-including all required dependencies using @vercel/ncc.
+including all required dependencies using @vercel/ncc. Commit `dist/` with your change: the workflow `check` runs
+`yarn dist` for every pull request and fails if `dist/` differs from the build. On Renovate branches, the workflow
+`dist` rebuilds and commits `dist/`.
 
 ## License
 
